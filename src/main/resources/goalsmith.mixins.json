@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.scouter.goalsmith.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "puppetmaker.refmap.json",
+  "mixins": [
+    "AttributeAccessor"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

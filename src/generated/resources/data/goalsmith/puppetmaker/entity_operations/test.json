@@ -4,12 +4,6 @@
       "attribute_definitions": [
         {
           "attribute": "minecraft:generic.attack_damage",
-          "uuid": [
-            -558840057,
-            810371953,
-            -1483970096,
-            -940914944
-          ],
           "value": 10.0
         }
       ]

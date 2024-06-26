@@ -32,5 +32,4 @@ public record RemoveSpecificPriorityOperation(int toRemove) implements GoalOpera
         return GoalOperationRegistry.REMOVE_SPECIFIC_PRIORITY.get();
     }
 
-    public record ReplacementGoal(int priority, Class<? extends Goal> goal){};
 }

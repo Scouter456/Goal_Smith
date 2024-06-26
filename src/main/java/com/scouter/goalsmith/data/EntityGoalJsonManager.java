@@ -23,7 +23,7 @@ public class EntityGoalJsonManager extends SimpleJsonResourceReloadListener {
 
 
     public EntityGoalJsonManager() {
-        this("goalsmith/entity_operations", STANDARD_GSON);
+        this("goalsmith/goaldata", STANDARD_GSON);
     }
 
     public static Map<ResourceLocation, GoalData> getEntityData() {

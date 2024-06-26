@@ -3,6 +3,7 @@ package com.scouter.goalsmith.data.goalcodec;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
 import net.minecraft.world.entity.PathfinderMob;
@@ -20,7 +21,7 @@ public class FollowOwnerGoalCodec implements GoalCodec {
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(FollowOwnerGoalCodec::getSpeedModifier),
             Codec.FLOAT.fieldOf("start_distance").forGetter(FollowOwnerGoalCodec::getStartDistance),
             Codec.FLOAT.fieldOf("stop_distance").forGetter(FollowOwnerGoalCodec::getStopDistance),
-            Codec.BOOL.fieldOf("can_fly").forGetter(FollowOwnerGoalCodec::isCanFly)
+            NullableFieldCodec.makeDefaultableField("can_fly", Codec.BOOL, false).forGetter(FollowOwnerGoalCodec::isCanFly)
     ).apply(instance, FollowOwnerGoalCodec::new));
 
 

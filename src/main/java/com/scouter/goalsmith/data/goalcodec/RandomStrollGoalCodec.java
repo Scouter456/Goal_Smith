@@ -2,6 +2,7 @@ package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
 import net.minecraft.world.entity.PathfinderMob;
@@ -13,9 +14,9 @@ public class RandomStrollGoalCodec implements GoalCodec {
 
     public static final Codec<RandomStrollGoalCodec> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Codec.INT.fieldOf("goal_priority").forGetter(codec -> codec.goalPriority),
-            Codec.DOUBLE.optionalFieldOf("speed_modifier", 1.0D).forGetter(codec -> codec.speedModifier),
-            Codec.INT.optionalFieldOf("interval", 120).forGetter(codec -> codec.interval),
-            Codec.BOOL.optionalFieldOf("check_no_action_time", true).forGetter(codec -> codec.checkNoActionTime)
+            NullableFieldCodec.makeDefaultableField("speed_modifier" ,Codec.DOUBLE, 1.0D).forGetter(codec -> codec.speedModifier),
+            NullableFieldCodec.makeDefaultableField("interval",Codec.INT, 120).forGetter(codec -> codec.interval),
+            NullableFieldCodec.makeDefaultableField("check_no_action_time", Codec.BOOL, true).forGetter(codec -> codec.checkNoActionTime)
     ).apply(builder, RandomStrollGoalCodec::new));
 
     private final double speedModifier;

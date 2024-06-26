@@ -2,6 +2,7 @@ package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
 import net.minecraft.world.entity.PathfinderMob;
@@ -12,7 +13,7 @@ public class WaterAvoidingRandomStrollGoalCodec implements GoalCodec {
     public static final Codec<WaterAvoidingRandomStrollGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(WaterAvoidingRandomStrollGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(WaterAvoidingRandomStrollGoalCodec::getSpeedModifier),
-            Codec.FLOAT.optionalFieldOf("probability", 0.001F).forGetter(WaterAvoidingRandomStrollGoalCodec::getProbability)
+            NullableFieldCodec.makeDefaultableField("probability",Codec.FLOAT, 0.001F).forGetter(WaterAvoidingRandomStrollGoalCodec::getProbability)
     ).apply(instance, WaterAvoidingRandomStrollGoalCodec::new));
 
     private final int goalPriority;

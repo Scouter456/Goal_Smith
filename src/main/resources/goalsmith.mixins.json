@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "com.scouter.goalsmith.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "puppetmaker.refmap.json",
+  "refmap": "goalsmith.refmap.json",
   "mixins": [
     "AttributeAccessor"
   ],

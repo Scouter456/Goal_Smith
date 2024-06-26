@@ -75,6 +75,11 @@ public class WikiPageBuilder {
         return this;
     }
 
+    public WikiPageBuilder addLink(String text, String url) {
+        this.content.append("[").append(text).append("](").append(url).append(")").append("\n\n");
+        return this;
+    }
+
     public String getContent() {
         return this.content.toString();
     }

@@ -43,6 +43,4 @@ public class FollowFlockLeaderGoalCodec implements GoalCodec {
     public Codec<? extends GoalCodec> codec() {
         return GoalRegistry.FOLLOW_FLOCK_LEADER_GOAL.get();
     }
-
-
 }

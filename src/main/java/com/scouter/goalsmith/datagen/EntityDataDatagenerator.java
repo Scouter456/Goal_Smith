@@ -40,7 +40,7 @@ public class EntityDataDatagenerator extends EntityDataProvider{
         goalOperations.add(replaceOperation);
 
         List<AttributesAdditions.AttributesMap> attributesMaps = new ArrayList<>();
-        AttributesAdditions.AttributesMap attm = new AttributesAdditions.AttributesMap(Attributes.ATTACK_DAMAGE, 10, UUID.randomUUID());
+        AttributesAdditions.AttributesMap attm = new AttributesAdditions.AttributesMap(Attributes.ATTACK_DAMAGE, 10);
        //AttributesAdditions.AttributesMap attm2 = new AttributesAdditions.AttributesMap(Attributes.MAX_HEALTH, 50, UUID.randomUUID());
        //AttributesAdditions.AttributesMap attm3 = new AttributesAdditions.AttributesMap(Attributes.FOLLOW_RANGE, 10, UUID.randomUUID());
        //AttributesAdditions.AttributesMap attm5 = new AttributesAdditions.AttributesMap(Attributes.JUMP_STRENGTH, 10, UUID.randomUUID());
@@ -59,6 +59,6 @@ public class EntityDataDatagenerator extends EntityDataProvider{
         attributeAdditions.add(attributesAdditions);
 
         GoalData entityData = new GoalData(new ResourceLocation("cow"), goalOperations, targetGoalOperations, attributeAdditions);
-        pWriter.accept(new EntityDataConsumer(prefix("test"), entityData));
+        pWriter.accept(new EntityDataConsumer(prefix("crazy_cow"), entityData));
     }
 }

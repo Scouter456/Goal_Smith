@@ -27,7 +27,7 @@ public class GoalRegistry {
     public static final RegistryObject<Codec<FleeSunGoalCodec>> FLEE_SUN_GOAL = GOAL_TYPE_SERIALIZER.register("flee_sun_goal", () -> FleeSunGoalCodec.CODEC);
     public static final RegistryObject<Codec<AvoidEntityGoalCodec>> AVOID_ENTITY_GOAL = GOAL_TYPE_SERIALIZER.register("avoid_entity_goal", () -> AvoidEntityGoalCodec.CODEC);
     public static final RegistryObject<Codec<AvoidLlamaGoalCodec>> AVOID_LLAMA_GOAL = GOAL_TYPE_SERIALIZER.register("avoid_llama_goal", () -> AvoidLlamaGoalCodec.CODEC);
-    public static final RegistryObject<Codec<BegCoalCodec>> BEG_GOAL = GOAL_TYPE_SERIALIZER.register("beg_goal", () -> BegCoalCodec.CODEC);
+    public static final RegistryObject<Codec<BegGoalCodec>> BEG_GOAL = GOAL_TYPE_SERIALIZER.register("beg_goal", () -> BegGoalCodec.CODEC);
     public static final RegistryObject<Codec<BreathAirGoalCodec>> BREATH_AIR_GOAL = GOAL_TYPE_SERIALIZER.register("breath_air_goal", () -> BreathAirGoalCodec.CODEC);
     public static final RegistryObject<Codec<BreedGoalCodec>> BREED_GOAL = GOAL_TYPE_SERIALIZER.register("breed_goal", () -> BreedGoalCodec.CODEC);
     public static final RegistryObject<Codec<ClimbOnTopOfPowderSnowGoalCodec>> CLIMB_ON_TOP_OF_POWDER_SNOW_GOAL = GOAL_TYPE_SERIALIZER.register("climb_on_top_of_powder_snow_goal", () -> ClimbOnTopOfPowderSnowGoalCodec.CODEC);

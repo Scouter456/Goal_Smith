@@ -11,21 +11,21 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.Item;
 
-public class BegCoalCodec  implements GoalCodec {
+public class BegGoalCodec implements GoalCodec {
 
 
-    public static final Codec<BegCoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.INT.fieldOf("goal_priority").forGetter(BegCoalCodec::getGoalPriority),
-            TagKey.codec(Registries.ITEM).fieldOf("interesting_food").forGetter(BegCoalCodec::getFood),
-            Codec.FLOAT.fieldOf("look_distance").forGetter(BegCoalCodec::getLookDistance)
-                ).apply(instance, BegCoalCodec::new));
+    public static final Codec<BegGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.INT.fieldOf("goal_priority").forGetter(BegGoalCodec::getGoalPriority),
+            TagKey.codec(Registries.ITEM).fieldOf("interesting_food").forGetter(BegGoalCodec::getFood),
+            Codec.FLOAT.fieldOf("look_distance").forGetter(BegGoalCodec::getLookDistance)
+                ).apply(instance, BegGoalCodec::new));
 
     private final int goalPriority;
     private final TagKey<Item> food;
     private final float lookDistance;
 
 
-    public BegCoalCodec(int goalPriority, TagKey<Item> food, float lookDistance) {
+    public BegGoalCodec(int goalPriority, TagKey<Item> food, float lookDistance) {
         this.goalPriority = goalPriority;
         this.food = food;
         this.lookDistance = lookDistance;

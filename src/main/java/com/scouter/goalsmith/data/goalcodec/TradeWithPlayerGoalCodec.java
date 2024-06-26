@@ -33,7 +33,7 @@ public class TradeWithPlayerGoalCodec implements GoalCodec {
             mob.goalSelector.addGoal(goalPriority, goal);
             return goal;
         }
-        LOGGER.error("Unsupported Operation, Tried adding BreedGoal to non-animal!");
+        LOGGER.error("Unsupported Operation, Tried adding TradeWithPlayerGoal to non-AbstractVillager!");
         return null;
     }
 

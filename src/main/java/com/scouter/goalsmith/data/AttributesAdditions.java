@@ -19,8 +19,7 @@ public class AttributesAdditions implements AttributeAdditions{
 
     private static final Codec<AttributesMap> ATTRIBUTES_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             BuiltInRegistries.ATTRIBUTE.byNameCodec().fieldOf("attribute").forGetter(AttributesMap::getAttribute),
-            Codec.DOUBLE.fieldOf("value").forGetter(AttributesMap::getValue),
-            UUIDUtil.CODEC.fieldOf("uuid").forGetter(AttributesMap::getUuid)
+            Codec.DOUBLE.fieldOf("value").forGetter(AttributesMap::getValue)
     ).apply(instance, AttributesMap::new));
 
 
@@ -64,20 +63,14 @@ public class AttributesAdditions implements AttributeAdditions{
     public static class AttributesMap {
 
 
-
         private final Attribute attribute;
         private final double value;
-        private final UUID uuid;
-        private final Multimap<Attribute, AttributeModifier> defaultModifiers;
 
 
-        public AttributesMap(Attribute attribute, double value, UUID uuid) {
+        public AttributesMap(Attribute attribute, double value) {
             this.attribute = attribute;
             this.value = value;
-            this.uuid = uuid;
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(attribute, new AttributeModifier(uuid, "attribute modifier", (double)value, AttributeModifier.Operation.ADDITION));
-            this.defaultModifiers = builder.build();
         }
 
         // Getter method for attribute
@@ -90,14 +83,6 @@ public class AttributesAdditions implements AttributeAdditions{
             return value;
         }
 
-        // Getter method for uuid
-        public UUID getUuid() {
-            return uuid;
-        }
-
-        public Multimap<Attribute, AttributeModifier> getDefaultModifiers() {
-            return defaultModifiers;
-        }
+        // Getter method for uuid}
     }
-
 }

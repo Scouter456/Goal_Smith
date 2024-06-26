@@ -13,7 +13,7 @@ public class IsInvisiblePredicate implements PredicateCodec<Entity> {
 
     @Override
     public Predicate<Entity> getPredicate() {
-        return entity -> entity.isInvisible();
+        return Entity::isInvisible;
     }
 
     @SuppressWarnings("unchecked")

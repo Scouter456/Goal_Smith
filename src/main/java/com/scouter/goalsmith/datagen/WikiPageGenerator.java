@@ -638,7 +638,7 @@ public class WikiPageGenerator extends WikiPageBuilderProvider{
         builder.startCollapsibleSection("Replaceable and Removable Goals");
 
 // Loop through each named goal in GoalMappings.NAMED_GOALS
-        for (ResourceLocation goal : GoalMappings.NAMED_GOALS.keySet()) {
+        for (ResourceLocation goal : GoalMappings.getNamedGoals().keySet()) {
             builder.addCodeBlock(goal.toString());
         }
 
@@ -649,7 +649,7 @@ public class WikiPageGenerator extends WikiPageBuilderProvider{
         builder.startCollapsibleSection("Replaceable and Removable Target Goals");
 
 // Loop through each named target goal in TargetGoalMappings.NAMED_TARGET_GOALS
-        for (ResourceLocation goal : TargetGoalMappings.NAMED_TARGET_GOALS.keySet()) {
+        for (ResourceLocation goal : TargetGoalMappings.getNamedTargetGoals().keySet()) {
             builder.addCodeBlock(goal.toString());
         }
 

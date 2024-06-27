@@ -47,7 +47,7 @@ public class EntityGoalJsonManager extends SimpleJsonResourceReloadListener {
                         GoalData entityData = result.getFirst();
                         puppets.put(entityData.targetEntity(), entityData);
                     })
-                    .ifRight(partial -> LOGGER.error("Failed to parse entity operations JSON for {} due to: {}", key, partial.message()));
+                    .ifRight(partial -> LOGGER.error("Failed to parse goal data JSON for {} due to: {}", key, partial.message()));
         }
 
         this.entityDataMap = puppets;

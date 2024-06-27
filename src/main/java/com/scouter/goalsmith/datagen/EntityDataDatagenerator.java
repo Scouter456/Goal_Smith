@@ -1,5 +1,6 @@
 package com.scouter.goalsmith.datagen;
 
+import com.scouter.goalsmith.GoalSmith;
 import com.scouter.goalsmith.data.AttributesAdditions;
 import com.scouter.goalsmith.data.GoalData;
 import com.scouter.goalsmith.data.GoalOperation;
@@ -19,18 +20,17 @@ import net.minecraft.world.entity.ai.goal.PanicGoal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 import static com.scouter.goalsmith.GoalSmith.prefix;
 
-public class EntityDataDatagenerator extends EntityDataProvider{
+public class EntityDataDatagenerator extends GoalDataProvider {
     public EntityDataDatagenerator(PackOutput pOutput) {
-        super(pOutput);
+        super(pOutput, GoalSmith.MODID);
     }
 
     @Override
-    protected void buildPuppets(Consumer<EntityDataConsumer> pWriter) {
+    protected void createGoalData(Consumer<GoalDataConsumer> pWriter) {
 
 
         List<GoalOperation> goalOperations = new ArrayList<>();
@@ -59,6 +59,6 @@ public class EntityDataDatagenerator extends EntityDataProvider{
         attributeAdditions.add(attributesAdditions);
 
         GoalData entityData = new GoalData(new ResourceLocation("cow"), goalOperations, targetGoalOperations, attributeAdditions);
-        pWriter.accept(new EntityDataConsumer(prefix("crazy_cow"), entityData));
+        pWriter.accept(new GoalDataConsumer(prefix("crazy_cow"), entityData));
     }
 }

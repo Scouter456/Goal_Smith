@@ -21,8 +21,8 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeServer(), new EntityTagGenerator(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new EntityDataDatagenerator(packOutput));
-        generator.addProvider(event.includeServer(), new WikiPageGenerator(packOutput));
+        //generator.addProvider(event.includeServer(), new EntityDataDatagenerator(packOutput));
+        //generator.addProvider(event.includeServer(), new WikiPageGenerator(packOutput));
 
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.*;
 
 public class TargetGoalMappings {
-    public static final BiMap<ResourceLocation, Class<? extends TargetGoal>> NAMED_TARGET_GOALS = HashBiMap.create();
+    private static final BiMap<ResourceLocation, Class<? extends TargetGoal>> NAMED_TARGET_GOALS = HashBiMap.create();
 
     static {
         NAMED_TARGET_GOALS.put(new ResourceLocation( "defend_village_target_goal"), DefendVillageTargetGoal.class);
@@ -23,5 +23,14 @@ public class TargetGoalMappings {
     }
 
     public static final Codec<Class<? extends Goal>> CODEC = ExtraCodecs.stringResolverCodec(sa -> NAMED_TARGET_GOALS.inverse().get(sa).toString(), key -> NAMED_TARGET_GOALS.get(new ResourceLocation(key)));
+
+
+    public static void addTargetGoal(ResourceLocation location, Class<? extends TargetGoal> goal) {
+        NAMED_TARGET_GOALS.put(location, goal);
+    }
+
+    public static BiMap<ResourceLocation, Class<? extends TargetGoal>> getNamedTargetGoals() {
+        return NAMED_TARGET_GOALS;
+    }
 
 }

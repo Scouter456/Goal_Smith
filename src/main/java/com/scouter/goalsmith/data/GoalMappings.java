@@ -6,9 +6,10 @@ import com.mojang.serialization.Codec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 
 public class GoalMappings {
-    public static final BiMap<ResourceLocation, Class<? extends Goal>> NAMED_GOALS = HashBiMap.create();
+    private static final BiMap<ResourceLocation, Class<? extends Goal>> NAMED_GOALS = HashBiMap.create();
 
     static {
         NAMED_GOALS.put(new ResourceLocation( "avoid_entity_goal"), AvoidEntityGoal.class);
@@ -73,4 +74,11 @@ public class GoalMappings {
 
     public static final Codec<Class<? extends Goal>> CODEC = ExtraCodecs.stringResolverCodec(sa -> NAMED_GOALS.inverse().get(sa).toString(), key -> NAMED_GOALS.get(new ResourceLocation(key)));
 
+    public static void addGoal(ResourceLocation location, Class<? extends Goal> goal) {
+        NAMED_GOALS.put(location, goal);
+    }
+
+    public static BiMap<ResourceLocation, Class<? extends Goal>> getNamedGoals() {
+        return NAMED_GOALS;
+    }
 }

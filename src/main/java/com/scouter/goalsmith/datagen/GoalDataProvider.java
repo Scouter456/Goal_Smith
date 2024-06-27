@@ -16,11 +16,11 @@ import java.util.function.Consumer;
 
 import static com.scouter.goalsmith.GoalSmith.prefix;
 
-public abstract class EntityDataProvider implements DataProvider {
+public abstract class GoalDataProvider implements DataProvider {
     protected final PackOutput.PathProvider entityPathProvider;
 
-    public EntityDataProvider(PackOutput pOutput) {
-        this.entityPathProvider = pOutput.createPathProvider(PackOutput.Target.DATA_PACK, prefix("puppetmaker/entity_operations").getPath());
+    public GoalDataProvider(PackOutput pOutput, String modid) {
+        this.entityPathProvider = pOutput.createPathProvider(PackOutput.Target.DATA_PACK, new ResourceLocation(modid,"goalsmith/goaldata").getPath());
     }
 
     @Override
@@ -28,9 +28,9 @@ public abstract class EntityDataProvider implements DataProvider {
         Set<ResourceLocation> set = Sets.newHashSet();
         Set<ResourceLocation> taskSet = Sets.newHashSet();
         List<CompletableFuture<?>> list = new ArrayList<>();
-        this.buildPuppets((entity -> {
+        this.createGoalData((entity -> {
             if (!set.add(entity.name())) {
-                throw new IllegalStateException("Duplicate entity " + entity.name());
+                throw new IllegalStateException("Duplicate Goal " + entity.name());
             } else {
 
                 GoalData.CODEC.encodeStart(JsonOps.INSTANCE, entity.data())
@@ -46,11 +46,11 @@ public abstract class EntityDataProvider implements DataProvider {
     }
 
 
-    protected abstract void buildPuppets(Consumer<EntityDataConsumer> pWriter);
-    public record EntityDataConsumer(ResourceLocation name, GoalData data) {
+    protected abstract void createGoalData(Consumer<GoalDataConsumer> pWriter);
+    public record GoalDataConsumer(ResourceLocation name, GoalData data) {
     }
     @Override
     public String getName() {
-        return "EntityData";
+        return "GoalData";
     }
 }

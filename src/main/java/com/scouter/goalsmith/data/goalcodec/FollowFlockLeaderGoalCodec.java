@@ -2,6 +2,7 @@ package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -12,7 +13,7 @@ import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import org.slf4j.Logger;
 
 public class FollowFlockLeaderGoalCodec implements GoalCodec {
-    public static final Codec<FollowFlockLeaderGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<FollowFlockLeaderGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(FollowFlockLeaderGoalCodec::getGoalPriority)
     ).apply(instance, FollowFlockLeaderGoalCodec::new));
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -40,7 +41,7 @@ public class FollowFlockLeaderGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.FOLLOW_FLOCK_LEADER_GOAL.get();
     }
 }

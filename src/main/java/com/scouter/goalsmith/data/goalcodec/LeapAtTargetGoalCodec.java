@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -9,7 +10,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 
 public class LeapAtTargetGoalCodec implements GoalCodec {
-    public static final Codec<LeapAtTargetGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<LeapAtTargetGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(LeapAtTargetGoalCodec::getGoalPriority),
             Codec.FLOAT.fieldOf("y_movement").forGetter(LeapAtTargetGoalCodec::getYd)
     ).apply(instance, LeapAtTargetGoalCodec::new));
@@ -38,7 +39,7 @@ public class LeapAtTargetGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.LEAP_AT_TARGET_GOAL.get();
     }
 

@@ -2,23 +2,22 @@ package com.scouter.goalsmith;
 
 import com.mojang.logging.LogUtils;
 import com.scouter.goalsmith.data.*;
-import com.scouter.goalsmith.setup.ClientSetup;
 import com.scouter.goalsmith.setup.ModSetup;
 import com.scouter.goalsmith.setup.Registration;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DataPackRegistryEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import org.slf4j.Logger;
 
 import java.util.Locale;
 
-// The value here should match an entry in the META-INF/mods.toml file
+// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(GoalSmith.MODID)
 public class GoalSmith
 {
@@ -31,12 +30,14 @@ public class GoalSmith
     {
         Registration.init();
         ModSetup.setup();
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
-        MinecraftForge.EVENT_BUS.addListener(this::commands);
+        IEventBus forgeBus = NeoForge.EVENT_BUS;
+        IEventBus modbus = ModLoadingContext.get().getActiveContainer().getEventBus();
+        NeoForge.EVENT_BUS.addListener(this::commands);
         modbus.addListener(ModSetup::init);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modbus.addListener(ClientSetup::init));
-        modbus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
+        if (FMLEnvironment.dist == Dist.CLIENT)
+        {
+            // static method with no client-only classes in method signature
+        }        modbus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
             event.dataPackRegistry(PMRegistries.Keys.GOAL_TYPE, GoalCodec.DIRECT_CODEC);
             event.dataPackRegistry(PMRegistries.Keys.TARGET_GOAL_TYPE, TargetGoalCodec.DIRECT_CODEC);
             event.dataPackRegistry(PMRegistries.Keys.GOAL_OPERATION, GoalOperation.DIRECT_CODEC);
@@ -47,10 +48,10 @@ public class GoalSmith
     }
 
     public static ResourceLocation prefix(String name) {
-        return new ResourceLocation(MODID, name.toLowerCase(Locale.ROOT));
+        return  ResourceLocation.fromNamespaceAndPath(MODID, name.toLowerCase(Locale.ROOT));
     }
 
     public void commands(RegisterCommandsEvent e) {
-    //    PuppetCommand.register(e.getDispatcher());
+        //    PuppetCommand.register(e.getDispatcher());
     }
 }

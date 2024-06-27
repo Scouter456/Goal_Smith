@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -10,7 +11,7 @@ import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 
 public class OpenDoorGoalCodec implements GoalCodec {
 
-    public static final Codec<OpenDoorGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<OpenDoorGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(OpenDoorGoalCodec::getGoalPriority),
             Codec.BOOL.fieldOf("close_door").forGetter(OpenDoorGoalCodec::getCloseDoor)
     ).apply(instance, OpenDoorGoalCodec::new));
@@ -39,7 +40,7 @@ public class OpenDoorGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.OPEN_DOOR_GOAL.get();
     }
 

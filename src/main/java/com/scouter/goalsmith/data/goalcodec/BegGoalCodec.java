@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.Item;
 public class BegGoalCodec implements GoalCodec {
 
 
-    public static final Codec<BegGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<BegGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(BegGoalCodec::getGoalPriority),
             TagKey.codec(Registries.ITEM).fieldOf("interesting_food").forGetter(BegGoalCodec::getFood),
             Codec.FLOAT.fieldOf("look_distance").forGetter(BegGoalCodec::getLookDistance)
@@ -48,7 +49,7 @@ public class BegGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.BEG_GOAL.get();
     }
 }

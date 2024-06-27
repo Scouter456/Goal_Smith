@@ -43,7 +43,7 @@ public class SearchForItemsGoal extends Goal {
         List<ItemEntity> list = mob.level().getEntitiesOfClass(ItemEntity.class, mob.getBoundingBox().inflate(8.0, 8.0, 8.0), e -> e.getItem().is(allowedItems));
         ItemStack itemstack = mob.getItemBySlot(EquipmentSlot.MAINHAND);
         if (itemstack.isEmpty() && !list.isEmpty()) {
-            mob.getNavigation().moveTo((Entity)list.get(0), 1.2000000476837158);
+            mob.getNavigation().moveTo((Entity)list.getFirst(), 1.2000000476837158);
         }
 
     }

@@ -1,11 +1,10 @@
 package com.scouter.goalsmith.data;
 
 import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.mixin.AttributeAccessor;
-import net.minecraft.core.UUIDUtil;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -13,12 +12,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 import java.util.List;
-import java.util.UUID;
 
 public class AttributesAdditions implements AttributeAdditions{
 
     private static final Codec<AttributesMap> ATTRIBUTES_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            BuiltInRegistries.ATTRIBUTE.byNameCodec().fieldOf("attribute").forGetter(AttributesMap::getAttribute),
+            BuiltInRegistries.ATTRIBUTE.holderByNameCodec().fieldOf("attribute").forGetter(AttributesMap::getAttribute),
             Codec.DOUBLE.fieldOf("value").forGetter(AttributesMap::getValue)
     ).apply(instance, AttributesMap::new));
 
@@ -50,12 +48,12 @@ public class AttributesAdditions implements AttributeAdditions{
                 ((AttributeAccessor) mob.getAttributes()).goalsmith$getAttributes().put(attributeMap.attribute, instance);
             }
         }
-
     }
 
     public void onAttributeModified(AttributeInstance attributeInstance, PathfinderMob mob) {
-        if (attributeInstance.getAttribute().isClientSyncable()) {
-            ((AttributeAccessor) mob.getAttributes()).goalsmith$getDirtyAttributes().add(attributeInstance);
+        ((AttributeAccessor) mob.getAttributes()).goalsmith$getAttributesToUpdate().add(attributeInstance);
+        if (attributeInstance.getAttribute().value().isClientSyncable()) {
+            ((AttributeAccessor) mob.getAttributes()).goalsmith$getAttributesToSync().add(attributeInstance);
         }
 
     }
@@ -63,18 +61,17 @@ public class AttributesAdditions implements AttributeAdditions{
     public static class AttributesMap {
 
 
-        private final Attribute attribute;
+        private final Holder<Attribute> attribute;
         private final double value;
 
 
-        public AttributesMap(Attribute attribute, double value) {
+        public AttributesMap(Holder<Attribute> attribute, double value) {
             this.attribute = attribute;
             this.value = value;
-            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         }
 
         // Getter method for attribute
-        public Attribute getAttribute() {
+        public Holder<Attribute> getAttribute() {
             return attribute;
         }
 

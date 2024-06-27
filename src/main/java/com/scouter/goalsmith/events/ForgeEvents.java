@@ -4,18 +4,14 @@ import com.mojang.logging.LogUtils;
 import com.scouter.goalsmith.GoalSmith;
 import com.scouter.goalsmith.data.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import org.slf4j.Logger;
 
-@Mod.EventBusSubscriber(modid = GoalSmith.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = GoalSmith.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class ForgeEvents {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -27,7 +23,7 @@ public class ForgeEvents {
     @SubscribeEvent
     public static void spawnEvent(EntityJoinLevelEvent event) {
         if(event.getEntity() != null && event.getEntity() instanceof PathfinderMob mob) {
-            ResourceLocation rl = new ResourceLocation(mob.getEncodeId());
+            ResourceLocation rl =  ResourceLocation.parse(mob.getEncodeId());
             if(rl != null && EntityGoalJsonManager.getEntityData().containsKey(rl)) {
 
 

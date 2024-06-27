@@ -1,6 +1,6 @@
 package com.scouter.goalsmith.data.operation.goal;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalOperation;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import java.util.List;
 
 public record AddOperation(List<GoalCodec> goal) implements GoalOperation {
-    public static final Codec<AddOperation> CODEC = RecordCodecBuilder.create(instance ->
+    public static final MapCodec<AddOperation> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     GoalCodec.DIRECT_CODEC.listOf().fieldOf("goal").forGetter(AddOperation::goal)
             ).apply(instance, AddOperation::new)
@@ -24,7 +24,7 @@ public record AddOperation(List<GoalCodec> goal) implements GoalOperation {
     }
 
     @Override
-    public Codec<? extends GoalOperation> codec() {
+    public MapCodec<? extends GoalOperation> codec() {
         return GoalOperationRegistry.ADD_GOAL.get();
     }
 }

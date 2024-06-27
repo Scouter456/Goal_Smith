@@ -1,13 +1,13 @@
 package com.scouter.goalsmith.data.operation.target;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.scouter.goalsmith.data.GoalOperationRegistry;
 import com.scouter.goalsmith.data.TargetGoalOperation;
 import net.minecraft.world.entity.PathfinderMob;
 
 public class RemoveAllTargetOperation implements TargetGoalOperation {
 
-    public static final Codec<RemoveAllTargetOperation> CODEC = Codec.unit(RemoveAllTargetOperation::new);
+    public static final MapCodec<RemoveAllTargetOperation> CODEC = MapCodec.unit(RemoveAllTargetOperation::new);
 
 
     @Override
@@ -16,7 +16,7 @@ public class RemoveAllTargetOperation implements TargetGoalOperation {
     }
 
     @Override
-    public Codec<? extends TargetGoalOperation> codec() {
+    public MapCodec<? extends TargetGoalOperation> codec() {
         return GoalOperationRegistry.REMOVE_ALL_TARGET_GOALS.get();
     }
 }

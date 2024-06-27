@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -11,7 +12,7 @@ import net.minecraft.world.entity.ai.goal.GolemRandomStrollInVillageGoal;
 public class RandomStrollInVillageGoalCodec implements GoalCodec {
 
 
-    public static final Codec<RandomStrollInVillageGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<RandomStrollInVillageGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(RandomStrollInVillageGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(RandomStrollInVillageGoalCodec::getSpeedModifier)
     ).apply(instance, RandomStrollInVillageGoalCodec::new));
@@ -40,7 +41,7 @@ public class RandomStrollInVillageGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.RANDOM_STROLL_IN_VILLAGE_GOAL.get();
     }
 

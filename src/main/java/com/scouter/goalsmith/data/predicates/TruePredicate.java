@@ -1,13 +1,13 @@
 package com.scouter.goalsmith.data.predicates;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.scouter.goalsmith.data.PredicateCodec;
 import com.scouter.goalsmith.data.PredicateRegistry;
 
 import java.util.function.Predicate;
 
 public class TruePredicate<T> implements PredicateCodec<T> {
-    public static final Codec<TruePredicate<?>> CODEC = Codec.unit(TruePredicate::new);
+    public static final MapCodec<TruePredicate<?>> CODEC = MapCodec.unit(TruePredicate::new);
 
     @Override
     public Predicate<T> getPredicate() {
@@ -16,7 +16,7 @@ public class TruePredicate<T> implements PredicateCodec<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Codec<TruePredicate<T>> codec() {
-        return (Codec<TruePredicate<T>>) PredicateRegistry.TRUE_PREDICATE.get();
+    public MapCodec<TruePredicate<T>> codec() {
+        return (MapCodec<TruePredicate<T>>) PredicateRegistry.TRUE_PREDICATE.get();
     }
 }

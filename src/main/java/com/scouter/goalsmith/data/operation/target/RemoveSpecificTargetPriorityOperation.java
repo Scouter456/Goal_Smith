@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.operation.target;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalOperationRegistry;
 import com.scouter.goalsmith.data.TargetGoalOperation;
@@ -9,7 +10,7 @@ import net.minecraft.world.entity.PathfinderMob;
 public record RemoveSpecificTargetPriorityOperation(int toRemove) implements TargetGoalOperation {
 
 
-    public static final Codec<RemoveSpecificTargetPriorityOperation> CODEC = RecordCodecBuilder.create(instance ->
+    public static final MapCodec<RemoveSpecificTargetPriorityOperation> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     Codec.INT.fieldOf("target_goal_priority_to_remove").forGetter(RemoveSpecificTargetPriorityOperation::toRemove)
             ).apply(instance, RemoveSpecificTargetPriorityOperation::new)
@@ -27,7 +28,7 @@ public record RemoveSpecificTargetPriorityOperation(int toRemove) implements Tar
     }
 
     @Override
-    public Codec<? extends TargetGoalOperation> codec() {
+    public MapCodec<? extends TargetGoalOperation> codec() {
         return GoalOperationRegistry.REMOVE_SPECIFIC_TARGET_PRIORITY.get();
     }
 }

@@ -1,6 +1,6 @@
 package com.scouter.goalsmith.data.predicates;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.PredicateCodec;
 import com.scouter.goalsmith.data.PredicateRegistry;
@@ -13,7 +13,7 @@ public class AndPredicate<T> implements PredicateCodec<T> {
     private final PredicateCodec<? extends T> predicate1;
     private final PredicateCodec<? extends T> predicate2;
 
-    public static final Codec<AndPredicate<?>> CODEC = RecordCodecBuilder.create(instance ->
+    public static final MapCodec<AndPredicate<?>> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     PredicateCodec.DIRECT_CODEC.fieldOf("predicate_1").forGetter(AndPredicate::getPredicate1),
                     PredicateCodec.DIRECT_CODEC.fieldOf("predicate_2").forGetter(AndPredicate::getPredicate2)
@@ -41,7 +41,7 @@ public class AndPredicate<T> implements PredicateCodec<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Codec<AndPredicate<T>> codec() {
-        return (Codec<AndPredicate<T>>) PredicateRegistry.AND_PREDICATE.get();
+    public MapCodec<AndPredicate<T>> codec() {
+        return (MapCodec<AndPredicate<T>>) PredicateRegistry.AND_PREDICATE.get();
     }
 }

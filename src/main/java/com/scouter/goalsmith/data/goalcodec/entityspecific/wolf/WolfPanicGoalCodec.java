@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec.entityspecific.wolf;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
@@ -14,7 +15,7 @@ import net.minecraft.world.entity.Entity;
 
 public class WolfPanicGoalCodec extends PanicGoalCodec {
 
-    public static final Codec<WolfPanicGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<WolfPanicGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(PanicGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(PanicGoalCodec::getSpeedModifier),
             NullableFieldCodec.makeDefaultableField("panic_predicate", PredicateCodec.DIRECT_CODEC, new OrPredicate<>(new IsFreezingPredicate(),new IsOnFirePredicate())).forGetter(PanicGoalCodec::getPredicateCodec)
@@ -25,7 +26,7 @@ public class WolfPanicGoalCodec extends PanicGoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.WOLF_PANIC_GOAL.get();
     }
 

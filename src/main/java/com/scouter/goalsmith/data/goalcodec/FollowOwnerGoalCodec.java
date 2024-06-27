@@ -2,6 +2,7 @@ package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
@@ -16,12 +17,11 @@ public class FollowOwnerGoalCodec implements GoalCodec {
     private static final Logger LOGGER = LogUtils.getLogger();
 
 
-    public static final Codec<FollowOwnerGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<FollowOwnerGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(FollowOwnerGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(FollowOwnerGoalCodec::getSpeedModifier),
             Codec.FLOAT.fieldOf("start_distance").forGetter(FollowOwnerGoalCodec::getStartDistance),
-            Codec.FLOAT.fieldOf("stop_distance").forGetter(FollowOwnerGoalCodec::getStopDistance),
-            NullableFieldCodec.makeDefaultableField("can_fly", Codec.BOOL, false).forGetter(FollowOwnerGoalCodec::isCanFly)
+            Codec.FLOAT.fieldOf("stop_distance").forGetter(FollowOwnerGoalCodec::getStopDistance)
     ).apply(instance, FollowOwnerGoalCodec::new));
 
 
@@ -29,14 +29,12 @@ public class FollowOwnerGoalCodec implements GoalCodec {
     private final double speedModifier;
     private final float startDistance;
     private final float stopDistance;
-    private final boolean canFly;
 
-    public FollowOwnerGoalCodec(int goalPriority, double speedModifier, float startDistance, float stopDistance, boolean canFly) {
+    public FollowOwnerGoalCodec(int goalPriority, double speedModifier, float startDistance, float stopDistance) {
         this.goalPriority = goalPriority;
         this.speedModifier = speedModifier;
         this.startDistance = startDistance;
         this.stopDistance = stopDistance;
-        this.canFly = canFly;
     }
 
 
@@ -56,14 +54,11 @@ public class FollowOwnerGoalCodec implements GoalCodec {
         return stopDistance;
     }
 
-    public boolean isCanFly() {
-        return canFly;
-    }
 
     @Override
     public Goal addGoal(PathfinderMob mob) {
         if(mob instanceof TamableAnimal animal) {
-            FollowOwnerGoal goal = new FollowOwnerGoal(animal, speedModifier, startDistance, stopDistance, canFly);
+            FollowOwnerGoal goal = new FollowOwnerGoal(animal, speedModifier, startDistance, stopDistance);
             mob.goalSelector.addGoal(goalPriority, goal);
             return goal;
         }
@@ -73,7 +68,7 @@ public class FollowOwnerGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.FOLLOW_OWNER_GOAL.get();
     }
 

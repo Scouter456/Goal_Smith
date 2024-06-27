@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -10,7 +11,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 
 public class RandomLookAroundGoalCodec implements GoalCodec {
 
-    public static final Codec<RandomLookAroundGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<RandomLookAroundGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(RandomLookAroundGoalCodec::getGoalPriority)
     ).apply(instance, RandomLookAroundGoalCodec::new));
 
@@ -32,7 +33,7 @@ public class RandomLookAroundGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.RANDOM_LOOK_AROUND_GOAL.get();
     }
 

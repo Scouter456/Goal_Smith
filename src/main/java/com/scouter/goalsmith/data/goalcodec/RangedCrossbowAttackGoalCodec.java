@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -13,7 +14,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 
 public class RangedCrossbowAttackGoalCodec<T extends Monster & RangedAttackMob & CrossbowAttackMob> implements GoalCodec {
 
-    public static final Codec<RangedCrossbowAttackGoalCodec<?>> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<RangedCrossbowAttackGoalCodec<?>> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(RangedCrossbowAttackGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(RangedCrossbowAttackGoalCodec::getSpeedModifier),
             Codec.FLOAT.fieldOf("attack_radius").forGetter(RangedCrossbowAttackGoalCodec::getAttackRadius)
@@ -55,7 +56,7 @@ public class RangedCrossbowAttackGoalCodec<T extends Monster & RangedAttackMob &
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.RANGED_CROSSBOW_ATTACK_GOAL.get();
     }
 

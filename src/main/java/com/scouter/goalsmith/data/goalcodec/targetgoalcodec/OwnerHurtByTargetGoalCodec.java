@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec.targetgoalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalRegistry;
 import com.scouter.goalsmith.data.TargetGoalCodec;
@@ -11,7 +12,7 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 
 public class OwnerHurtByTargetGoalCodec implements TargetGoalCodec {
 
-    public static final Codec<OwnerHurtByTargetGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<OwnerHurtByTargetGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(OwnerHurtByTargetGoalCodec::getGoalPriority)
     ).apply(instance, OwnerHurtByTargetGoalCodec::new));
 
@@ -37,7 +38,7 @@ public class OwnerHurtByTargetGoalCodec implements TargetGoalCodec {
     }
 
     @Override
-    public Codec<? extends TargetGoalCodec> codec() {
+    public MapCodec<? extends TargetGoalCodec> codec() {
         return GoalRegistry.OWNER_HURT_BY_TARGET_GOAL.get();
     }
 

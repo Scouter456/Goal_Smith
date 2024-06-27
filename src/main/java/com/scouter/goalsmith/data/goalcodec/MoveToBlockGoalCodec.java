@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.block.Block;
 
 public class MoveToBlockGoalCodec implements GoalCodec {
 
-    public static final Codec<MoveToBlockGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<MoveToBlockGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(MoveToBlockGoalCodec::getGoalPriority),
             TagKey.codec(Registries.BLOCK).fieldOf("block").forGetter(MoveToBlockGoalCodec::getBlock),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(MoveToBlockGoalCodec::getSpeedModifier),
@@ -64,7 +65,7 @@ public class MoveToBlockGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.MOVE_TO_BLOCK_GOAL.get();
     }
 

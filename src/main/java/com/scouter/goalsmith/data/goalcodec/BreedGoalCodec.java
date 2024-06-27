@@ -2,6 +2,7 @@ package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -17,7 +18,7 @@ import org.slf4j.Logger;
 public class BreedGoalCodec implements GoalCodec {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final Codec<BreedGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<BreedGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(BreedGoalCodec::getGoalPriority),
             TagKey.codec(Registries.ENTITY_TYPE).fieldOf("possible_partner").forGetter(BreedGoalCodec::getPartner),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(BreedGoalCodec::getSpeedModifier)
@@ -54,7 +55,7 @@ public class BreedGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.BREED_GOAL.get();
     }
 }

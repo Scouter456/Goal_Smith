@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -12,7 +13,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 
 public class RangedBowAttackGoalCodec<T extends Mob & RangedAttackMob> implements GoalCodec {
 
-    public static final Codec<RangedBowAttackGoalCodec<?>> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<RangedBowAttackGoalCodec<?>> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(RangedBowAttackGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(RangedBowAttackGoalCodec::getSpeedModifier),
             Codec.INT.fieldOf("attack_interval_min").forGetter(RangedBowAttackGoalCodec::getAttackIntervalMin),
@@ -55,7 +56,7 @@ public class RangedBowAttackGoalCodec<T extends Mob & RangedAttackMob> implement
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.RANGED_BOW_ATTACK_GOAL.get();
     }
 

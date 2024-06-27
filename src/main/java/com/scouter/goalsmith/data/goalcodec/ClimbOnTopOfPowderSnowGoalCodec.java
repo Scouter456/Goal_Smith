@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -9,7 +10,7 @@ import net.minecraft.world.entity.ai.goal.ClimbOnTopOfPowderSnowGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public class ClimbOnTopOfPowderSnowGoalCodec implements GoalCodec {
-    public static final Codec<ClimbOnTopOfPowderSnowGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<ClimbOnTopOfPowderSnowGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(ClimbOnTopOfPowderSnowGoalCodec::getGoalPriority)
     ).apply(instance, ClimbOnTopOfPowderSnowGoalCodec::new));
 
@@ -32,7 +33,7 @@ public class ClimbOnTopOfPowderSnowGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.CLIMB_ON_TOP_OF_POWDER_SNOW_GOAL.get();
     }
 }

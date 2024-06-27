@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
@@ -17,7 +18,7 @@ import net.minecraft.world.entity.ai.goal.UseItemGoal;
 import net.minecraft.world.item.ItemStack;
 
 public class UseItemGoalCodec implements GoalCodec {
-    public static final Codec<UseItemGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<UseItemGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                     Codec.INT.fieldOf("goal_priority").forGetter(UseItemGoalCodec::getGoalPriority),
                     ItemStack.CODEC.fieldOf("item").forGetter(UseItemGoalCodec::getItem),
                     NullableFieldCodec.makeDefaultableField("finish_using_sound", BuiltInRegistries.SOUND_EVENT.byNameCodec(), SoundEvents.WANDERING_TRADER_DRINK_MILK).forGetter(UseItemGoalCodec::getFinishUsingSound),
@@ -60,7 +61,7 @@ public class UseItemGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.USE_ITEM_GOAL.get();
     }
 

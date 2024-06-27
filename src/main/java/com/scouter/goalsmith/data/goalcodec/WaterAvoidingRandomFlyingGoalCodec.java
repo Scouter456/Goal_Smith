@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -10,7 +11,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 
 public class WaterAvoidingRandomFlyingGoalCodec implements GoalCodec {
 
-    public static final Codec<WaterAvoidingRandomFlyingGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<WaterAvoidingRandomFlyingGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(WaterAvoidingRandomFlyingGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(WaterAvoidingRandomFlyingGoalCodec::getSpeedModifier)
     ).apply(instance, WaterAvoidingRandomFlyingGoalCodec::new));
@@ -39,7 +40,7 @@ public class WaterAvoidingRandomFlyingGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.WATER_AVOIDING_RANDOM_FLYING_GOAL.get();
     }
 

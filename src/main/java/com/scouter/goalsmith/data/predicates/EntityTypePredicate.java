@@ -1,6 +1,6 @@
 package com.scouter.goalsmith.data.predicates;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.PredicateCodec;
 import com.scouter.goalsmith.data.PredicateRegistry;
@@ -14,7 +14,7 @@ public class EntityTypePredicate implements PredicateCodec<Entity> {
 
     private final EntityType<?> entityType;
 
-    public static final Codec<EntityTypePredicate> CODEC = RecordCodecBuilder.create(instance ->
+    public static final MapCodec<EntityTypePredicate> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity_type").forGetter(e -> e.entityType)
             ).apply(instance, EntityTypePredicate::new)
@@ -35,7 +35,7 @@ public class EntityTypePredicate implements PredicateCodec<Entity> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Codec<? extends PredicateCodec<Entity>> codec() {
-        return (Codec<? extends PredicateCodec<Entity>>) PredicateRegistry.ENTITY_TYPE_PREDICATE.get();
+    public MapCodec<? extends PredicateCodec<Entity>> codec() {
+        return (MapCodec<? extends PredicateCodec<Entity>>) PredicateRegistry.ENTITY_TYPE_PREDICATE.get();
     }
 }

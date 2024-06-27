@@ -81,7 +81,7 @@ public class NullableFieldCodec<VALUE> extends OptionalFieldCodec<VALUE>
 	 */
 	protected NullableFieldCodec(String name, Codec<VALUE> elementCodec)
 	{
-		super(name, elementCodec);
+		super(name, elementCodec, false);
 		this.name = name;
 		this.elementCodec = elementCodec;
 	}

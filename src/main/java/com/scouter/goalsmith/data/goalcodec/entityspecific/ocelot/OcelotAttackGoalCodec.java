@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec.entityspecific.ocelot;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -10,7 +11,7 @@ import net.minecraft.world.entity.ai.goal.OcelotAttackGoal;
 
 public class OcelotAttackGoalCodec implements GoalCodec {
 
-    public static final Codec<OcelotAttackGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<OcelotAttackGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(OcelotAttackGoalCodec::getGoalPriority)
     ).apply(instance, OcelotAttackGoalCodec::new));
 
@@ -32,7 +33,7 @@ public class OcelotAttackGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.OCELOT_ATTACK_GOAL.get();
     }
 

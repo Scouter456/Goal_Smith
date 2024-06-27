@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -9,7 +10,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public class JumpWaterGoalCodec implements GoalCodec {
-    public static final Codec<JumpWaterGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<JumpWaterGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(JumpWaterGoalCodec::getGoalPriority),
             Codec.INT.fieldOf("interval").forGetter(JumpWaterGoalCodec::getInterval)
     ).apply(instance, JumpWaterGoalCodec::new));
@@ -38,7 +39,7 @@ public class JumpWaterGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.JUMP_WATER_GOAL.get();
     }
 }

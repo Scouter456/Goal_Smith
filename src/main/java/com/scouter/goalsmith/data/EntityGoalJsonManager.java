@@ -41,13 +41,11 @@ public class EntityGoalJsonManager extends SimpleJsonResourceReloadListener {
         for (Map.Entry<ResourceLocation, JsonElement> entry : jsons.entrySet()) {
             ResourceLocation key = entry.getKey();
             JsonElement element = entry.getValue();
-            GoalData.CODEC.decode(JsonOps.INSTANCE, element)
-                    .get()
-                    .ifLeft(result -> {
-                        GoalData entityData = result.getFirst();
-                        puppets.put(entityData.targetEntity(), entityData);
-                    })
-                    .ifRight(partial -> LOGGER.error("Failed to parse goal data JSON for {} due to: {}", key, partial.message()));
+
+            GoalData entityData = GoalData.CODEC.decode(JsonOps.INSTANCE, element)
+                    .getOrThrow()
+                    .getFirst();
+            puppets.put(entityData.targetEntity(), entityData);
         }
 
         this.entityDataMap = puppets;

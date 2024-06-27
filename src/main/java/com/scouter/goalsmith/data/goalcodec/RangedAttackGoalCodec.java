@@ -2,6 +2,7 @@ package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -14,7 +15,7 @@ import org.slf4j.Logger;
 public class RangedAttackGoalCodec implements GoalCodec {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final Codec<RangedAttackGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<RangedAttackGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(RangedAttackGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(RangedAttackGoalCodec::getSpeedModifier),
             Codec.INT.fieldOf("attack_interval_min").forGetter(RangedAttackGoalCodec::getAttackIntervalMin),
@@ -68,7 +69,7 @@ public class RangedAttackGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.RANGED_ATTACK_GOAL.get();
     }
 

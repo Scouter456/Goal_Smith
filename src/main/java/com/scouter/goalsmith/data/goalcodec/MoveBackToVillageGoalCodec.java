@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -9,7 +10,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MoveBackToVillageGoal;
 
 public class MoveBackToVillageGoalCodec implements GoalCodec {
-    public static final Codec<MoveBackToVillageGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<MoveBackToVillageGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(MoveBackToVillageGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(MoveBackToVillageGoalCodec::getSpeedModifier),
             Codec.BOOL.fieldOf("check_no_action_time").forGetter(MoveBackToVillageGoalCodec::isCheckNoActionTime)
@@ -45,7 +46,7 @@ public class MoveBackToVillageGoalCodec implements GoalCodec {
     }
 
     @Override
-    public Codec<? extends GoalCodec> codec() {
+    public MapCodec<? extends GoalCodec> codec() {
         return GoalRegistry.MOVE_BACK_TO_VILLAGE_GOAL.get();
     }
 

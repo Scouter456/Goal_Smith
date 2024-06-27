@@ -15,6 +15,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 
@@ -33,32 +34,16 @@ public class EntityDataDatagenerator extends GoalDataProvider {
     protected void createGoalData(Consumer<GoalDataConsumer> pWriter) {
 
 
-        List<GoalOperation> goalOperations = new ArrayList<>();
-        List<TargetGoalOperation> targetGoalOperations = new ArrayList<>();
-        List<AttributesAdditions> attributeAdditions =new ArrayList<>();
-        ReplaceOperation replaceOperation = new ReplaceOperation(new ReplaceOperation.ReplacementGoal(1, PanicGoal.class), new MeleeAttackGoalCodec(1,4,true));
-        goalOperations.add(replaceOperation);
 
-        List<AttributesAdditions.AttributesMap> attributesMaps = new ArrayList<>();
-        AttributesAdditions.AttributesMap attm = new AttributesAdditions.AttributesMap(Attributes.ATTACK_DAMAGE, 10);
-       //AttributesAdditions.AttributesMap attm2 = new AttributesAdditions.AttributesMap(Attributes.MAX_HEALTH, 50, UUID.randomUUID());
-       //AttributesAdditions.AttributesMap attm3 = new AttributesAdditions.AttributesMap(Attributes.FOLLOW_RANGE, 10, UUID.randomUUID());
-       //AttributesAdditions.AttributesMap attm5 = new AttributesAdditions.AttributesMap(Attributes.JUMP_STRENGTH, 10, UUID.randomUUID());
-       //AttributesAdditions.AttributesMap attm6 = new AttributesAdditions.AttributesMap(Attributes.MOVEMENT_SPEED, 5, UUID.randomUUID());
-        NearestAttackableTargetGoalCodec nearestAttackableTargetGoal = new NearestAttackableTargetGoalCodec(1, TagKey.create(Registries.ENTITY_TYPE, prefix("player")),10, true, false, new TruePredicate<>());
-        AddTargetOperation addTargetOperation = new AddTargetOperation(List.of(nearestAttackableTargetGoal));
 
-        attributesMaps.add(attm);
-        targetGoalOperations.add(addTargetOperation);
-        //attributesMaps.add(attm2);
-        //attributesMaps.add(attm3);
-        //attributesMaps.add(attm5);
-        //attributesMaps.add(attm6);
+        GoalData crazyCow = new GoalDataBuilder(EntityType.COW)
+                .addTargetGoal(new NearestAttackableTargetGoalCodec(1, TagKey.create(Registries.ENTITY_TYPE, prefix("player")),10, true, false, new TruePredicate<>()))
+                .addReplaceOperation(1, PanicGoal.class, new MeleeAttackGoalCodec(1,4,true))
+                .addAttributeAddition(Attributes.ATTACK_DAMAGE, 10)
+                .build();
 
-        AttributesAdditions attributesAdditions = new AttributesAdditions(attributesMaps);
-        attributeAdditions.add(attributesAdditions);
 
-        GoalData entityData = new GoalData(new ResourceLocation("cow"), goalOperations, targetGoalOperations, attributeAdditions);
-        pWriter.accept(new GoalDataConsumer(prefix("crazy_cow"), entityData));
+
+        pWriter.accept(new GoalDataConsumer(prefix("crazy_cow"), crazyCow));
     }
 }

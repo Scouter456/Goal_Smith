@@ -15,20 +15,20 @@ import static com.scouter.goalsmith.GoalSmith.prefix;
 public class PMRegistries {
     static { init(); }
     public static final DeferredRegister<Codec<? extends GoalOperation>> GOAL_OPERATION_SERIALIZER = DeferredRegister.create(Keys.GOAL_OPERATION_SERIALIZERS, Keys.GOAL_OPERATION_SERIALIZERS.location().getNamespace());
-    public static final Supplier<IForgeRegistry<Codec<? extends GoalOperation>>> GOAL_OPERATION_SERIALIZER_SUPPLIER = GOAL_OPERATION_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends GoalOperation>>().disableSaving());
+    public static final Supplier<IForgeRegistry<Codec<? extends GoalOperation>>> GOAL_OPERATION_SERIALIZER_SUPPLIER = GOAL_OPERATION_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends GoalOperation>>().disableSaving().disableSync());
 
     public static final DeferredRegister<Codec<? extends TargetGoalOperation>> TARGET_GOAL_OPERATION_SERIALIZER = DeferredRegister.create(Keys. TARGET_GOAL_OPERATION_SERIALIZERS, Keys. TARGET_GOAL_OPERATION_SERIALIZERS.location().getNamespace());
-    public static final Supplier<IForgeRegistry<Codec<? extends TargetGoalOperation>>>  TARGET_GOAL_OPERATION_SERIALIZER_SUPPLIER =  TARGET_GOAL_OPERATION_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends TargetGoalOperation>>().disableSaving());
+    public static final Supplier<IForgeRegistry<Codec<? extends TargetGoalOperation>>>  TARGET_GOAL_OPERATION_SERIALIZER_SUPPLIER =  TARGET_GOAL_OPERATION_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends TargetGoalOperation>>().disableSaving().disableSync());
 
 
     public static final DeferredRegister<Codec<? extends GoalCodec>> GOAL_TYPE_SERIALIZER = DeferredRegister.create(Keys.GOAL_TYPE_SERIALIZERS, Keys.GOAL_TYPE_SERIALIZERS.location().getNamespace());
-    public static final Supplier<IForgeRegistry<Codec<? extends GoalCodec>>> GOAL_TYPE_SERIALIZER_SUPPLIER = GOAL_TYPE_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends GoalCodec>>().disableSaving());
+    public static final Supplier<IForgeRegistry<Codec<? extends GoalCodec>>> GOAL_TYPE_SERIALIZER_SUPPLIER = GOAL_TYPE_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends GoalCodec>>().disableSaving().disableSync());
 
     public static final DeferredRegister<Codec<? extends TargetGoalCodec>> TARGET_GOAL_TYPE_SERIALIZER = DeferredRegister.create(Keys.TARGET_GOAL_TYPE_SERIALIZERS, Keys.TARGET_GOAL_TYPE_SERIALIZERS.location().getNamespace());
-    public static final Supplier<IForgeRegistry<Codec<? extends TargetGoalCodec>>> TARGET_GOAL_TYPE_SERIALIZER_SUPPLIER = TARGET_GOAL_TYPE_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends TargetGoalCodec>>().disableSaving());
+    public static final Supplier<IForgeRegistry<Codec<? extends TargetGoalCodec>>> TARGET_GOAL_TYPE_SERIALIZER_SUPPLIER = TARGET_GOAL_TYPE_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends TargetGoalCodec>>().disableSaving().disableSync());
 
     public static final DeferredRegister<Codec<? extends PredicateCodec<?>>> PREDICATE_TYPE_SERIALIZER = DeferredRegister.create(Keys.PREDICATE_TYPE_SERIALIZERS, Keys.PREDICATE_TYPE_SERIALIZERS.location().getNamespace());
-    public static final Supplier<IForgeRegistry<Codec<? extends PredicateCodec<?>>>> PREDICATE_TYPE_SERIALIZER_SUPPLIER = PREDICATE_TYPE_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends PredicateCodec<?>>>().disableSaving());
+    public static final Supplier<IForgeRegistry<Codec<? extends PredicateCodec<?>>>> PREDICATE_TYPE_SERIALIZER_SUPPLIER = PREDICATE_TYPE_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends PredicateCodec<?>>>().disableSaving().disableSync());
 
 
 

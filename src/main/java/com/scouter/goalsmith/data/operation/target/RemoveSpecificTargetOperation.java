@@ -8,6 +8,7 @@ import com.scouter.goalsmith.data.TargetGoalMappings;
 import com.scouter.goalsmith.data.TargetGoalOperation;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 
 public record RemoveSpecificTargetOperation(ReplacementGoal toRemove) implements TargetGoalOperation {
 
@@ -42,5 +43,5 @@ public record RemoveSpecificTargetOperation(ReplacementGoal toRemove) implements
         return GoalOperationRegistry.REMOVE_SPECIFIC_TARGET_GOAL.get();
     }
 
-    public record ReplacementGoal(int priority, Class<? extends Goal> goal){};
+    public record ReplacementGoal(int priority, Class<? extends TargetGoal> goal){};
 }

@@ -9,6 +9,7 @@ import com.scouter.goalsmith.data.TargetGoalMappings;
 import com.scouter.goalsmith.data.TargetGoalOperation;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 
 public record ReplaceTargetOperation(ReplacementGoal toReplace, TargetGoalCodec replacement) implements TargetGoalOperation {
 
@@ -45,5 +46,5 @@ public record ReplaceTargetOperation(ReplacementGoal toReplace, TargetGoalCodec 
         return GoalOperationRegistry.REPLACE_TARGET_GOAL.get();
     }
 
-    public record ReplacementGoal(int priority, Class<? extends Goal> goal){};
+    public record ReplacementGoal(int priority, Class<? extends TargetGoal> goal){};
 }

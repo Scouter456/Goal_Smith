@@ -22,7 +22,7 @@ public class TargetGoalMappings {
         NAMED_TARGET_GOALS.put(new ResourceLocation( "owner_hurt_target_goal"), OwnerHurtTargetGoal.class);
     }
 
-    public static final Codec<Class<? extends Goal>> CODEC = ExtraCodecs.stringResolverCodec(sa -> NAMED_TARGET_GOALS.inverse().get(sa).toString(), key -> NAMED_TARGET_GOALS.get(new ResourceLocation(key)));
+    public static final Codec<Class<? extends TargetGoal>> CODEC = ExtraCodecs.stringResolverCodec(sa -> NAMED_TARGET_GOALS.inverse().get(sa).toString(), key -> NAMED_TARGET_GOALS.get(new ResourceLocation(key)));
 
 
     public static void addTargetGoal(ResourceLocation location, Class<? extends TargetGoal> goal) {

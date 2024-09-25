@@ -2,14 +2,19 @@ package com.scouter.goalsmith.events;
 
 import com.mojang.logging.LogUtils;
 import com.scouter.goalsmith.GoalSmith;
-import com.scouter.goalsmith.data.*;
+import com.scouter.goalsmith.data.EntityGoalJsonManager;
+import com.scouter.goalsmith.data.GoalData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
+
+import java.util.List;
 
 @EventBusSubscriber(modid = GoalSmith.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class ForgeEvents {
@@ -21,25 +26,31 @@ public class ForgeEvents {
     }
 
     @SubscribeEvent
+    public static void onServerStart(ServerStartingEvent event) {
+        EntityGoalJsonManager.applyGoalData(event.getServer().overworld());
+    }
+
+
+
+
+    @SubscribeEvent
     public static void spawnEvent(EntityJoinLevelEvent event) {
-        if(event.getEntity() != null && event.getEntity() instanceof PathfinderMob mob) {
+        if(event.getEntity() != null && event.getEntity() instanceof PathfinderMob mob && !event.getLevel().isClientSide) {
             ResourceLocation rl =  ResourceLocation.parse(mob.getEncodeId());
+            EntityGoalJsonManager.applyGoalData((ServerLevel) event.getLevel());
+
             if(rl != null && EntityGoalJsonManager.getEntityData().containsKey(rl)) {
 
 
-                GoalData entityData = EntityGoalJsonManager.getEntityData().get(rl);
-
-                for(GoalOperation goalOperation : entityData.goalOperation()) {
-                    goalOperation.performOperation(mob);
+                List<GoalData> entityData = EntityGoalJsonManager.getEntityData().get(rl);
+                for(GoalData data : entityData) {
+                    data.performOperations(mob);
                 }
+            }
 
-                for(TargetGoalOperation targetGoalOperation : entityData.targetGoalOperation()) {
-                    targetGoalOperation.performOperation(mob);
-                }
-
-                for(AttributeAdditions attributeAdditions : entityData.attributeAdditions()) {
-                    attributeAdditions.performAdditions(mob);
-                }
+            List<GoalData> data = EntityGoalJsonManager.getAllEntityData();
+            for(GoalData all : data) {
+                all.performOperations(mob);
             }
         }
     }

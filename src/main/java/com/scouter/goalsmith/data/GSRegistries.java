@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.RegistryBuilder;
 
 import static com.scouter.goalsmith.GoalSmith.prefix;
 
-public class PMRegistries {
+public class GSRegistries {
     static { init(); }
 
 
@@ -17,6 +17,7 @@ public class PMRegistries {
     public static final Registry<MapCodec<? extends GoalCodec>> GOAL_TYPE_SERIALIZER = new RegistryBuilder<>(Keys.GOAL_TYPE_SERIALIZERS).maxId(Integer.MAX_VALUE - 1).sync(false).create();
     public static final Registry<MapCodec<? extends TargetGoalCodec>> TARGET_GOAL_TYPE_SERIALIZER = new RegistryBuilder<>(Keys.TARGET_GOAL_TYPE_SERIALIZERS).maxId(Integer.MAX_VALUE - 1).sync(false).create();
     public static final Registry<MapCodec<? extends PredicateCodec<?>>> PREDICATE_TYPE_SERIALIZER = new RegistryBuilder<>(Keys.PREDICATE_TYPE_SERIALIZERS).maxId(Integer.MAX_VALUE - 1).sync(false).create();
+    public static final Registry<MapCodec<? extends EntityTargetType>> ENTITY_TARGET_TYPE_TYPE_SERIALIZER = new RegistryBuilder<>(Keys.ENTITY_TARGET_TYPE_SERIALIZERS).maxId(Integer.MAX_VALUE - 1).sync(false).create();
 
 
 
@@ -37,6 +38,10 @@ public class PMRegistries {
 
         public static final ResourceKey<Registry<MapCodec<? extends TargetGoalCodec>>> TARGET_GOAL_TYPE_SERIALIZERS = key(prefix("target_goal_type_serializer").toString());
         public static final ResourceKey<Registry<TargetGoalCodec>> TARGET_GOAL_TYPE = key(prefix("target_goal_type").toString());
+
+        public static final ResourceKey<Registry<MapCodec<? extends EntityTargetType>>> ENTITY_TARGET_TYPE_SERIALIZERS = key(prefix("entity_target_type_serializer").toString());
+        public static final ResourceKey<Registry<EntityTargetType>> ENTITY_TARGET_TYPE = key(prefix("entity_target_type").toString());
+
         private static <T> ResourceKey<Registry<T>> key(String name)
         {
             return ResourceKey.createRegistryKey( ResourceLocation.parse(name));

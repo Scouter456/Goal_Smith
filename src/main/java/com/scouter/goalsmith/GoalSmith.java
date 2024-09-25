@@ -37,14 +37,16 @@ public class GoalSmith
         if (FMLEnvironment.dist == Dist.CLIENT)
         {
             // static method with no client-only classes in method signature
-        }        modbus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
-            event.dataPackRegistry(PMRegistries.Keys.GOAL_TYPE, GoalCodec.DIRECT_CODEC);
-            event.dataPackRegistry(PMRegistries.Keys.TARGET_GOAL_TYPE, TargetGoalCodec.DIRECT_CODEC);
-            event.dataPackRegistry(PMRegistries.Keys.GOAL_OPERATION, GoalOperation.DIRECT_CODEC);
-            event.dataPackRegistry(PMRegistries.Keys.PREDICATE_TYPE, PredicateCodec.DIRECT_CODEC);
-            event.dataPackRegistry(PMRegistries.Keys.TARGET_GOAL_OPERATION, TargetGoalOperation.DIRECT_CODEC);
+        }
+        modbus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
+            event.dataPackRegistry(GSRegistries.Keys.GOAL_TYPE, GoalCodec.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.TARGET_GOAL_TYPE, TargetGoalCodec.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.GOAL_OPERATION, GoalOperation.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.PREDICATE_TYPE, PredicateCodec.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.TARGET_GOAL_OPERATION, TargetGoalOperation.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.ENTITY_TARGET_TYPE, EntityTargetType.DIRECT_CODEC);
 
-        });
+    });
     }
 
     public static ResourceLocation prefix(String name) {

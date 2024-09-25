@@ -1,4 +1,4 @@
-package com.scouter.goalsmith.data.goalcodec.datagen;
+package com.scouter.goalsmith.datagen;
 
 import java.util.ArrayList;
 import java.util.List;

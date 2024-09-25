@@ -1,4 +1,4 @@
-package com.scouter.goalsmith.data.goalcodec.datagen;
+package com.scouter.goalsmith.datagen;
 
 import com.scouter.goalsmith.GoalSmith;
 import com.scouter.goalsmith.data.GoalData;

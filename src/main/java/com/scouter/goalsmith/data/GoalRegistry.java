@@ -14,8 +14,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class GoalRegistry {
-    public static final DeferredRegister<MapCodec<? extends GoalCodec>> GOAL_TYPE_SERIALIZER = DeferredRegister.create(PMRegistries.Keys.GOAL_TYPE_SERIALIZERS, GoalSmith.MODID);
-    public static final DeferredRegister<MapCodec<? extends TargetGoalCodec>> TARGET_GOAL_TYPE_SERIALIZER = DeferredRegister.create(PMRegistries.Keys.TARGET_GOAL_TYPE_SERIALIZERS, GoalSmith.MODID);
+    public static final DeferredRegister<MapCodec<? extends GoalCodec>> GOAL_TYPE_SERIALIZER = DeferredRegister.create(GSRegistries.Keys.GOAL_TYPE_SERIALIZERS, GoalSmith.MODID);
+    public static final DeferredRegister<MapCodec<? extends TargetGoalCodec>> TARGET_GOAL_TYPE_SERIALIZER = DeferredRegister.create(GSRegistries.Keys.TARGET_GOAL_TYPE_SERIALIZERS, GoalSmith.MODID);
 
     public static final DeferredHolder<MapCodec<? extends GoalCodec>, MapCodec<RandomStrollGoalCodec>> RANDOM_STROLL_GOAL = GOAL_TYPE_SERIALIZER.register("random_stroll_goal", () -> RandomStrollGoalCodec.CODEC);
     public static final DeferredHolder<MapCodec<? extends GoalCodec>, MapCodec<WaterAvoidingRandomStrollGoalCodec>> WATER_AVOIDING_RANDOM_STROLL_GOAL = GOAL_TYPE_SERIALIZER.register("water_avoiding_random_stroll_goal", () -> WaterAvoidingRandomStrollGoalCodec.CODEC);

@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 
 public class PredicateRegistry {
-    public static final DeferredRegister<MapCodec<? extends PredicateCodec<?>>> PREDICATE_SERIALIZER = DeferredRegister.create(PMRegistries.Keys.PREDICATE_TYPE_SERIALIZERS, GoalSmith.MODID);
+    public static final DeferredRegister<MapCodec<? extends PredicateCodec<?>>> PREDICATE_SERIALIZER = DeferredRegister.create(GSRegistries.Keys.PREDICATE_TYPE_SERIALIZERS, GoalSmith.MODID);
 
     public static final DeferredHolder<MapCodec<? extends PredicateCodec<?>>, MapCodec<? extends OrPredicate<?>>> OR_PREDICATE = PREDICATE_SERIALIZER.register("or", () -> OrPredicate.CODEC);
     public static final DeferredHolder<MapCodec<? extends PredicateCodec<?>>, MapCodec<? extends AndPredicate<?>>> AND_PREDICATE = PREDICATE_SERIALIZER.register("and", () -> AndPredicate.CODEC);
@@ -33,5 +33,6 @@ public class PredicateRegistry {
     public static final DeferredHolder<MapCodec<? extends PredicateCodec<?>>, MapCodec<EntityNotBeingRiddenPredicate>> ENTITY_NOT_BEING_RIDDEN = PREDICATE_SERIALIZER.register("entity_not_being_ridden", () -> EntityNotBeingRiddenPredicate.CODEC);
     public static final DeferredHolder<MapCodec<? extends PredicateCodec<?>>, MapCodec<NoCreativeOrSpectatorPredicate>> NO_CREATIVE_OR_SPECTATOR = PREDICATE_SERIALIZER.register("no_creative_or_spectator", () -> NoCreativeOrSpectatorPredicate.CODEC);
     public static final DeferredHolder<MapCodec<? extends PredicateCodec<?>>, MapCodec<IsDifficultyPredicate>> IS_DIFFICULTY = PREDICATE_SERIALIZER.register("is_difficulty", () -> IsDifficultyPredicate.CODEC);
+    public static final DeferredHolder<MapCodec<? extends PredicateCodec<?>>, MapCodec<IsBlockStatePredicate>> IS_BLOCK = PREDICATE_SERIALIZER.register("is_block", () -> IsBlockStatePredicate.CODEC);
 
 }

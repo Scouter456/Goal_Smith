@@ -1,4 +1,4 @@
-package com.scouter.goalsmith.data.goalcodec.datagen;
+package com.scouter.goalsmith.datagen;
 
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
@@ -33,7 +33,7 @@ public abstract class GoalDataProvider implements DataProvider {
                 throw new IllegalStateException("Duplicate Goal " + entity.name());
             } else {
 
-            Optional<JsonElement> element = GoalData.CODEC.encodeStart(JsonOps.INSTANCE, entity.data()).result();
+            Optional<JsonElement> element = GoalData.TARGET_ENTITY_CODEC.encodeStart(JsonOps.INSTANCE, entity.data()).result();
             list.add(DataProvider.saveStable(pOutput, element.get(), this.entityPathProvider.json(entity.name())));
 
             }

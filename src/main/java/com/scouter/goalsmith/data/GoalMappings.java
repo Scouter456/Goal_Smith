@@ -72,6 +72,8 @@ public class GoalMappings {
 
     public static final Codec<Class<? extends Goal>> CODEC = Codec.stringResolver(sa -> NAMED_GOALS.inverse().get(sa).toString(), key -> NAMED_GOALS.get(ResourceLocation.tryParse(key)));
 
+
+
     public static void addGoal(ResourceLocation location, Class<? extends Goal> goal) {
         NAMED_GOALS.put(location, goal);
     }

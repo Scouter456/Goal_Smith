@@ -28,6 +28,11 @@ public class PanicGoalCodec implements GoalCodec {
     private final double speedModifier;
     private final PredicateCodec<Entity> predicateCodec;
 
+
+    public PanicGoalCodec(int goalPriority, double speedModifier) {
+        this(goalPriority, speedModifier, new OrPredicate<>(new OrPredicate<>(new NegatePredicate<>(new LastHurtByMobIsNullPredicate()), new IsFreezingPredicate()),new IsOnFirePredicate()));
+    }
+
     public PanicGoalCodec(int goalPriority, double speedModifier, PredicateCodec<Entity> panicPredicate) {
         this.goalPriority = goalPriority;
         this.speedModifier = speedModifier;

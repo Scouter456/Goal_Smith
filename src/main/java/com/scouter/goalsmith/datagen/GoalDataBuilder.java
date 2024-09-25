@@ -1,8 +1,9 @@
-package com.scouter.goalsmith.data.goalcodec.datagen;
+package com.scouter.goalsmith.datagen;
 
 import com.scouter.goalsmith.data.*;
 import com.scouter.goalsmith.data.operation.goal.*;
 import com.scouter.goalsmith.data.operation.target.*;
+import com.scouter.goalsmith.data.targets.SpecificEntityTargetType;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -14,20 +15,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoalDataBuilder {
-    private ResourceLocation targetEntity;
+    private EntityTargetType targetEntity;
     private final List<GoalOperation> goalOperations = new ArrayList<>();
     private final List<TargetGoalOperation> targetGoalOperations = new ArrayList<>();
     private final List<AttributesAdditions> attributeAdditions = new ArrayList<>();
 
 
+
     public GoalDataBuilder(EntityType<?> targetEntity) {
         String ns = targetEntity.getDefaultLootTable().location().getNamespace();
         String name = targetEntity.getDefaultLootTable().location().getPath().split("/")[1];
-        this.targetEntity = ResourceLocation.fromNamespaceAndPath(ns, name);
+        this.targetEntity = new SpecificEntityTargetType(ResourceLocation.fromNamespaceAndPath(ns, name));
+    }
+
+    public GoalDataBuilder(EntityTargetType targetEntity) {
+        this.targetEntity = targetEntity;
     }
 
     public GoalDataBuilder(ResourceLocation targetEntity) {
-        this.targetEntity = targetEntity;
+        this.targetEntity = new SpecificEntityTargetType(targetEntity);
     }
 
     public GoalDataBuilder addGoalOperation(GoalOperation operation) {
@@ -130,9 +136,5 @@ public class GoalDataBuilder {
 
     public GoalData build() {
         return new GoalData(targetEntity, goalOperations, targetGoalOperations, attributeAdditions);
-    }
-
-    public GoalDataProvider.GoalDataConsumer buildGoalDataConsumer() {
-        return  new GoalDataProvider.GoalDataConsumer(targetEntity, new GoalData(targetEntity, goalOperations, targetGoalOperations, attributeAdditions));
     }
 }

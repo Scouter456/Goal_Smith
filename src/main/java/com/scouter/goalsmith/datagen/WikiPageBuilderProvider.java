@@ -1,4 +1,4 @@
-package com.scouter.goalsmith.data.goalcodec.datagen;
+package com.scouter.goalsmith.datagen;
 
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;

@@ -1,4 +1,4 @@
-/*package com.scouter.goalsmith.data.goalcodec.datagen;
+/*package com.scouter.goalsmith.datagen;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

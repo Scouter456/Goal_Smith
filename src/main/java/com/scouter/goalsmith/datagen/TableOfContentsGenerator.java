@@ -1,4 +1,4 @@
-package com.scouter.goalsmith.data.goalcodec.datagen;
+package com.scouter.goalsmith.datagen;
 
 import java.io.BufferedWriter;
 import java.io.File;

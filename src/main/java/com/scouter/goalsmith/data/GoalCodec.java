@@ -10,9 +10,9 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import java.util.function.Function;
 
 public interface GoalCodec {
-    Codec<GoalCodec> DIRECT_CODEC = PMRegistries.GOAL_TYPE_SERIALIZER.byNameCodec().dispatch(GoalCodec::codec, Function.identity());
+    Codec<GoalCodec> DIRECT_CODEC = GSRegistries.GOAL_TYPE_SERIALIZER.byNameCodec().dispatch(GoalCodec::codec, Function.identity());
 
-    Codec<Holder<GoalCodec>> REFERENCE_CODEC = RegistryFileCodec.create(PMRegistries.Keys.GOAL_TYPE, DIRECT_CODEC);
+    Codec<Holder<GoalCodec>> REFERENCE_CODEC = RegistryFileCodec.create(GSRegistries.Keys.GOAL_TYPE, DIRECT_CODEC);
 
     Goal addGoal(PathfinderMob mob);
     MapCodec<? extends GoalCodec> codec();

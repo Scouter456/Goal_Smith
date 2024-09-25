@@ -1,6 +1,7 @@
 package com.scouter.goalsmith.setup;
 
 import com.mojang.logging.LogUtils;
+import com.scouter.goalsmith.data.EntityTargetTypeRegistry;
 import com.scouter.goalsmith.data.GoalOperationRegistry;
 import com.scouter.goalsmith.data.GoalRegistry;
 import com.scouter.goalsmith.data.PredicateRegistry;
@@ -28,6 +29,6 @@ public class Registration {
         PredicateRegistry.PREDICATE_SERIALIZER.register(bus);
         GoalOperationRegistry.GOAL_OPERATION.register(bus);
         GoalOperationRegistry.TARGET_GOAL_OPERATION.register(bus);
-
+        EntityTargetTypeRegistry.ENTITY_TARGET_TYPE.register(bus);
     }
 }

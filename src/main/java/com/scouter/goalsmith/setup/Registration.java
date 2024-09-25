@@ -1,10 +1,7 @@
 package com.scouter.goalsmith.setup;
 
 import com.mojang.logging.LogUtils;
-import com.scouter.goalsmith.data.GoalOperationRegistry;
-import com.scouter.goalsmith.data.GoalRegistry;
-import com.scouter.goalsmith.data.PMRegistries;
-import com.scouter.goalsmith.data.PredicateRegistry;
+import com.scouter.goalsmith.data.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -18,17 +15,17 @@ public class Registration {
 
 
 
-        PMRegistries.GOAL_TYPE_SERIALIZER.register(bus);
-        PMRegistries.TARGET_GOAL_TYPE_SERIALIZER.register(bus);
-        PMRegistries.PREDICATE_TYPE_SERIALIZER.register(bus);
-        PMRegistries.GOAL_OPERATION_SERIALIZER.register(bus);
-        PMRegistries.TARGET_GOAL_OPERATION_SERIALIZER.register(bus);
-
+        GSRegistries.GOAL_TYPE_SERIALIZER.register(bus);
+        GSRegistries.TARGET_GOAL_TYPE_SERIALIZER.register(bus);
+        GSRegistries.PREDICATE_TYPE_SERIALIZER.register(bus);
+        GSRegistries.GOAL_OPERATION_SERIALIZER.register(bus);
+        GSRegistries.TARGET_GOAL_OPERATION_SERIALIZER.register(bus);
+        GSRegistries.ENTITY_TARGET_TYPE_TYPE_SERIALIZER.register(bus);
         GoalRegistry.GOAL_TYPE_SERIALIZER.register(bus);
         GoalRegistry.TARGET_GOAL_TYPE_SERIALIZER.register(bus);
         PredicateRegistry.PREDICATE_SERIALIZER.register(bus);
         GoalOperationRegistry.GOAL_OPERATION.register(bus);
         GoalOperationRegistry.TARGET_GOAL_OPERATION.register(bus);
-
+        EntityTargetTypeRegistry.ENTITY_TARGET_TYPE.register(bus);
     }
 }

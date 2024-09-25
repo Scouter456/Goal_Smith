@@ -9,8 +9,8 @@ import net.minecraftforge.registries.RegistryObject;
 import static com.scouter.goalsmith.GoalSmith.MODID;
 
 public class GoalOperationRegistry {
-    public static final DeferredRegister<Codec<? extends GoalOperation>> GOAL_OPERATION = DeferredRegister.create(PMRegistries.Keys.GOAL_OPERATION_SERIALIZERS, MODID);
-    public static final DeferredRegister<Codec<? extends TargetGoalOperation>> TARGET_GOAL_OPERATION = DeferredRegister.create(PMRegistries.Keys.TARGET_GOAL_OPERATION_SERIALIZERS, MODID);
+    public static final DeferredRegister<Codec<? extends GoalOperation>> GOAL_OPERATION = DeferredRegister.create(GSRegistries.Keys.GOAL_OPERATION_SERIALIZERS, MODID);
+    public static final DeferredRegister<Codec<? extends TargetGoalOperation>> TARGET_GOAL_OPERATION = DeferredRegister.create(GSRegistries.Keys.TARGET_GOAL_OPERATION_SERIALIZERS, MODID);
 
 
 

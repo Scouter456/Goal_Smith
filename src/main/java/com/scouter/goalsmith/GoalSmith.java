@@ -37,11 +37,12 @@ public class GoalSmith
         modbus.addListener(ModSetup::init);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modbus.addListener(ClientSetup::init));
         modbus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
-            event.dataPackRegistry(PMRegistries.Keys.GOAL_TYPE, GoalCodec.DIRECT_CODEC);
-            event.dataPackRegistry(PMRegistries.Keys.TARGET_GOAL_TYPE, TargetGoalCodec.DIRECT_CODEC);
-            event.dataPackRegistry(PMRegistries.Keys.GOAL_OPERATION, GoalOperation.DIRECT_CODEC);
-            event.dataPackRegistry(PMRegistries.Keys.PREDICATE_TYPE, PredicateCodec.DIRECT_CODEC);
-            event.dataPackRegistry(PMRegistries.Keys.TARGET_GOAL_OPERATION, TargetGoalOperation.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.GOAL_TYPE, GoalCodec.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.TARGET_GOAL_TYPE, TargetGoalCodec.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.GOAL_OPERATION, GoalOperation.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.PREDICATE_TYPE, PredicateCodec.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.TARGET_GOAL_OPERATION, TargetGoalOperation.DIRECT_CODEC);
+            event.dataPackRegistry(GSRegistries.Keys.ENTITY_TARGET_TYPE, EntityTargetType.DIRECT_CODEC);
 
         });
     }

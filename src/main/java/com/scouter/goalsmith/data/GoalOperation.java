@@ -9,9 +9,9 @@ import net.minecraft.world.entity.PathfinderMob;
 import java.util.function.Function;
 
 public interface GoalOperation {
-    Codec<GoalOperation> DIRECT_CODEC = ExtraCodecs.lazyInitializedCodec(() -> PMRegistries.GOAL_OPERATION_SERIALIZER_SUPPLIER.get().getCodec()).dispatch(GoalOperation::codec, Function.identity());
+    Codec<GoalOperation> DIRECT_CODEC = ExtraCodecs.lazyInitializedCodec(() -> GSRegistries.GOAL_OPERATION_SERIALIZER_SUPPLIER.get().getCodec()).dispatch(GoalOperation::codec, Function.identity());
 
-    Codec<Holder<GoalOperation>> REFERENCE_CODEC = RegistryFileCodec.create(PMRegistries.Keys.GOAL_OPERATION, DIRECT_CODEC);
+    Codec<Holder<GoalOperation>> REFERENCE_CODEC = RegistryFileCodec.create(GSRegistries.Keys.GOAL_OPERATION, DIRECT_CODEC);
 
     void performOperation(PathfinderMob mob);
     Codec<? extends GoalOperation> codec();

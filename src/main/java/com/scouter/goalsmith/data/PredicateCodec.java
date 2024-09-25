@@ -9,9 +9,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public interface PredicateCodec<T> {
-    Codec<PredicateCodec<?>> DIRECT_CODEC = ExtraCodecs.lazyInitializedCodec(() -> PMRegistries.PREDICATE_TYPE_SERIALIZER_SUPPLIER.get().getCodec()).dispatch(PredicateCodec::codec, Function.identity());
+    Codec<PredicateCodec<?>> DIRECT_CODEC = ExtraCodecs.lazyInitializedCodec(() -> GSRegistries.PREDICATE_TYPE_SERIALIZER_SUPPLIER.get().getCodec()).dispatch(PredicateCodec::codec, Function.identity());
 
-    Codec<Holder<PredicateCodec<?>>> REFERENCE_CODEC = RegistryFileCodec.create(PMRegistries.Keys.PREDICATE_TYPE, DIRECT_CODEC);
+    Codec<Holder<PredicateCodec<?>>> REFERENCE_CODEC = RegistryFileCodec.create(GSRegistries.Keys.PREDICATE_TYPE, DIRECT_CODEC);
     Predicate<T> getPredicate();
     Codec<? extends PredicateCodec<T>> codec();
 }

@@ -14,8 +14,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 public class GoalRegistry {
-    public static final DeferredRegister<Codec<? extends GoalCodec>> GOAL_TYPE_SERIALIZER = DeferredRegister.create(PMRegistries.Keys.GOAL_TYPE_SERIALIZERS, GoalSmith.MODID);
-    public static final DeferredRegister<Codec<? extends TargetGoalCodec>> TARGET_GOAL_TYPE_SERIALIZER = DeferredRegister.create(PMRegistries.Keys.TARGET_GOAL_TYPE_SERIALIZERS, GoalSmith.MODID);
+    public static final DeferredRegister<Codec<? extends GoalCodec>> GOAL_TYPE_SERIALIZER = DeferredRegister.create(GSRegistries.Keys.GOAL_TYPE_SERIALIZERS, GoalSmith.MODID);
+    public static final DeferredRegister<Codec<? extends TargetGoalCodec>> TARGET_GOAL_TYPE_SERIALIZER = DeferredRegister.create(GSRegistries.Keys.TARGET_GOAL_TYPE_SERIALIZERS, GoalSmith.MODID);
 
 
     public static final RegistryObject<Codec<RandomStrollGoalCodec>> RANDOM_STROLL_GOAL = GOAL_TYPE_SERIALIZER.register("random_stroll_goal", () -> RandomStrollGoalCodec.CODEC);

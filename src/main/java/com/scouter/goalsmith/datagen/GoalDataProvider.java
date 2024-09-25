@@ -33,7 +33,7 @@ public abstract class GoalDataProvider implements DataProvider {
                 throw new IllegalStateException("Duplicate Goal " + entity.name());
             } else {
 
-                GoalData.CODEC.encodeStart(JsonOps.INSTANCE, entity.data())
+                GoalData.TARGET_ENTITY_CODEC.encodeStart(JsonOps.INSTANCE, entity.data())
                         .get()
                         .ifLeft(e -> list.add(DataProvider.saveStable(pOutput, e, this.entityPathProvider.json(entity.name()))))
                         .ifRight(partial -> LOGGER.error("Failed to create goalData {}", entity.data()));

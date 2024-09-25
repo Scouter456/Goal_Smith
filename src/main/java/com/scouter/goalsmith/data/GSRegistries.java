@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 import static com.scouter.goalsmith.GoalSmith.prefix;
 
-public class PMRegistries {
+public class GSRegistries {
     static { init(); }
     public static final DeferredRegister<Codec<? extends GoalOperation>> GOAL_OPERATION_SERIALIZER = DeferredRegister.create(Keys.GOAL_OPERATION_SERIALIZERS, Keys.GOAL_OPERATION_SERIALIZERS.location().getNamespace());
     public static final Supplier<IForgeRegistry<Codec<? extends GoalOperation>>> GOAL_OPERATION_SERIALIZER_SUPPLIER = GOAL_OPERATION_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends GoalOperation>>().disableSaving().disableSync());
@@ -30,6 +30,8 @@ public class PMRegistries {
     public static final DeferredRegister<Codec<? extends PredicateCodec<?>>> PREDICATE_TYPE_SERIALIZER = DeferredRegister.create(Keys.PREDICATE_TYPE_SERIALIZERS, Keys.PREDICATE_TYPE_SERIALIZERS.location().getNamespace());
     public static final Supplier<IForgeRegistry<Codec<? extends PredicateCodec<?>>>> PREDICATE_TYPE_SERIALIZER_SUPPLIER = PREDICATE_TYPE_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends PredicateCodec<?>>>().disableSaving().disableSync());
 
+    public static final DeferredRegister<Codec<? extends EntityTargetType>> ENTITY_TARGET_TYPE_TYPE_SERIALIZER = DeferredRegister.create(Keys.ENTITY_TARGET_TYPE_SERIALIZERS, Keys.ENTITY_TARGET_TYPE_SERIALIZERS.location().getNamespace());
+    public static final Supplier<IForgeRegistry<Codec<? extends EntityTargetType>>> ENTITY_TARGET_TYPE_TYPE_SERIALIZER_SUPPLIER = ENTITY_TARGET_TYPE_TYPE_SERIALIZER.makeRegistry(() -> new RegistryBuilder<Codec<? extends EntityTargetType>>().disableSaving().disableSync());
 
 
     public static final class Keys {
@@ -46,9 +48,12 @@ public class PMRegistries {
         public static final ResourceKey<Registry<Codec<? extends TargetGoalOperation>>> TARGET_GOAL_OPERATION_SERIALIZERS = key(prefix("target_goal_operation_serializer").toString());
         public static final ResourceKey<Registry<TargetGoalOperation>> TARGET_GOAL_OPERATION = key(prefix("target_goal_operation").toString());
 
-
         public static final ResourceKey<Registry<Codec<? extends TargetGoalCodec>>> TARGET_GOAL_TYPE_SERIALIZERS = key(prefix("target_goal_type_serializer").toString());
         public static final ResourceKey<Registry<TargetGoalCodec>> TARGET_GOAL_TYPE = key(prefix("target_goal_type").toString());
+
+        public static final ResourceKey<Registry<Codec<? extends EntityTargetType>>> ENTITY_TARGET_TYPE_SERIALIZERS = key(prefix("entity_target_type_serializer").toString());
+        public static final ResourceKey<Registry<EntityTargetType>> ENTITY_TARGET_TYPE = key(prefix("entity_target_type").toString());
+
         private static <T> ResourceKey<Registry<T>> key(String name)
         {
             return ResourceKey.createRegistryKey(new ResourceLocation(name));

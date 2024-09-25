@@ -9,6 +9,9 @@ import com.scouter.goalsmith.data.goalcodec.targetgoalcodec.*;
 import com.scouter.goalsmith.data.operation.goal.*;
 import com.scouter.goalsmith.data.operation.target.*;
 import com.scouter.goalsmith.data.predicates.*;
+import com.scouter.goalsmith.data.targets.AllEntityTargetType;
+import com.scouter.goalsmith.data.targets.SpecificEntityTargetType;
+import com.scouter.goalsmith.data.targets.TagTargetType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -17,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Difficulty;
@@ -76,8 +80,8 @@ public class WikiPageGenerator extends WikiPageBuilderProvider{
         attributeAdditions.add(attributesAdditions);
 
         // Create the GoalData object
-        GoalData entityData = new GoalData(new ResourceLocation("minecraft:cow"), goalOperations, targetGoalOperations, attributeAdditions);
-        String jsonString = encodeDataToJsonString(GoalData.CODEC, entityData);
+        GoalData entityData = new GoalData(new SpecificEntityTargetType(new ResourceLocation("cow")), goalOperations, targetGoalOperations, attributeAdditions);
+        String jsonString = encodeDataToJsonString(GoalData.TARGET_ENTITY_CODEC, entityData);
 
         // Create the home page content
 
@@ -89,7 +93,7 @@ public class WikiPageGenerator extends WikiPageBuilderProvider{
         createWikiPage("goals", goalPage(), consumer);
         createWikiPage("attributes", attributesPage(), consumer);
         createWikiPage("goaldata", goalDataPage(), consumer);
-
+        createWikiPage("targettype", entityTargetType(), consumer);
         // Generate the Table of Contents
         contentsGenerator.addPage(homePage());
     }
@@ -2601,10 +2605,11 @@ public class WikiPageGenerator extends WikiPageBuilderProvider{
 
         builder.addParagraph("**Parameters Required:**");
         builder.addList(new String[]{
-                " `target_entity`: The entity type to which the goals and attributes will be applied, identified by its resource location.",
+                " `target_type`: The type that should be applied, `specific`, `all` or `tag`",
                 " `goal_operations`:(optional value) A list of operations that specify the goals to add or modify.",
                 " `target_goal_operations`:(optional value) A list of operations that specify the target goals to add or modify.",
                 " `attributes_additions`:(optional value) A list of attribute additions to apply to the target entity."
+
         });
 
         builder.addParagraph("**Example Usage of Goal Data:**");
@@ -2616,10 +2621,10 @@ public class WikiPageGenerator extends WikiPageBuilderProvider{
         List<AttributesAdditions> attributeAdditions = List.of(new AttributesAdditions(List.of(new AttributesAdditions.AttributesMap(Attributes.ATTACK_DAMAGE, 10D)))); // Add appropriate AttributesAdditions instances
 
 // Creating an instance of GoalData
-        GoalData goalData = new GoalData(targetEntity, goalOperations, targetGoalOperations, attributeAdditions);
+        GoalData goalData = new GoalData(   new SpecificEntityTargetType(targetEntity), goalOperations, targetGoalOperations, attributeAdditions);
 
 // Adding code block for GoalData instance
-        builder.addCodeBlock(encodeDataToJsonString(GoalData.CODEC, goalData));
+        builder.addCodeBlock(encodeDataToJsonString(GoalData.TARGET_ENTITY_CODEC, goalData));
 
         builder.addParagraph("This example demonstrates how to configure Goal Data with specific parameters for targeting an entity and modifying its goals and attributes.");
 
@@ -2632,6 +2637,36 @@ public class WikiPageGenerator extends WikiPageBuilderProvider{
         builder.endCollapsibleSection();
         return builder;
     }
+
+    private WikiPageBuilder entityTargetType() {
+        WikiPageBuilder builder = new WikiPageBuilder("targetType");
+        builder.startCollapsibleSection("Target Type");
+
+        builder.addParagraph("The way the data will target entities");
+
+        builder.addParagraph("The following target types with their usages are shown below");
+
+
+
+        ResourceLocation targetEntity = new ResourceLocation("minecraft", "cow");
+
+        SpecificEntityTargetType entityTargetType = new SpecificEntityTargetType(targetEntity);
+
+        builder.addCodeBlock(encodeDataToJsonString(EntityTargetType.DIRECT_CODEC, entityTargetType));
+
+        TagTargetType targetType = new TagTargetType(EntityTypeTags.SKELETONS);
+
+        builder.addCodeBlock(encodeDataToJsonString(EntityTargetType.DIRECT_CODEC, targetType));
+
+        AllEntityTargetType allEntityTargetType = new AllEntityTargetType();
+
+        builder.addCodeBlock(encodeDataToJsonString(EntityTargetType.DIRECT_CODEC, allEntityTargetType));
+
+
+        builder.endCollapsibleSection();
+        return builder;
+    }
+
 
     private void createWikiPage(String filename, WikiPageBuilder builder, BiConsumer<String, Supplier<String>> consumer){
         consumer.accept(filename, builder::getContent);

@@ -8,7 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 
 public class PredicateRegistry {
-    public static final DeferredRegister<Codec<? extends PredicateCodec<?>>> PREDICATE_SERIALIZER = DeferredRegister.create(PMRegistries.Keys.PREDICATE_TYPE_SERIALIZERS, GoalSmith.MODID);
+    public static final DeferredRegister<Codec<? extends PredicateCodec<?>>> PREDICATE_SERIALIZER = DeferredRegister.create(GSRegistries.Keys.PREDICATE_TYPE_SERIALIZERS, GoalSmith.MODID);
 
     public static final RegistryObject<Codec<? extends OrPredicate<?>>> OR_PREDICATE = PREDICATE_SERIALIZER.register("or", () -> OrPredicate.CODEC);
     public static final RegistryObject<Codec<? extends AndPredicate<?>>> AND_PREDICATE = PREDICATE_SERIALIZER.register("and", () -> AndPredicate.CODEC);
@@ -36,5 +36,6 @@ public class PredicateRegistry {
     public static final RegistryObject<Codec<EntityNotBeingRiddenPredicate>> ENTITY_NOT_BEING_RIDDEN = PREDICATE_SERIALIZER.register("entity_not_being_ridden", () -> EntityNotBeingRiddenPredicate.CODEC);
     public static final RegistryObject<Codec<NoCreativeOrSpectatorPredicate>> NO_CREATIVE_OR_SPECTATOR = PREDICATE_SERIALIZER.register("no_creative_or_spectator", () -> NoCreativeOrSpectatorPredicate.CODEC);
     public static final RegistryObject<Codec<IsDifficultyPredicate>> IS_DIFFICULTY = PREDICATE_SERIALIZER.register("is_difficulty", () -> IsDifficultyPredicate.CODEC);
+    public static final RegistryObject<Codec<IsBlockStatePredicate>> IS_BLOCK = PREDICATE_SERIALIZER.register("is_block", () -> IsBlockStatePredicate.CODEC);
 
 }

@@ -2,7 +2,6 @@ package com.scouter.goalsmith.data.goalcodec.entityspecific.llama;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -15,7 +14,7 @@ import org.slf4j.Logger;
 public class LlamaFollowCaravanGoalCodec implements GoalCodec {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final MapCodec<LlamaFollowCaravanGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<LlamaFollowCaravanGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(LlamaFollowCaravanGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(LlamaFollowCaravanGoalCodec::getSpeedModifier)
     ).apply(instance, LlamaFollowCaravanGoalCodec::new));
@@ -50,8 +49,8 @@ public class LlamaFollowCaravanGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.LLAMA_FOLLOW_CARAVAN_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.LLAMA_FOLLOW_CARAVAN_GOAL;
     }
 
 

@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "goalsmith",
+	"version": "${version}",
+	"name": "Goalsmith",
+	"description": "This mod allows you to change the goals of entities through datapacks",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://github.com/Scouter456/Goal_Smith",
+		"sources": "https://github.com/Scouter456/Goal_Smith"
+	},
+	"license": "MIT",
+	"icon": "assets/goalsmith/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.scouter.goalsmith.Goalsmith"
+		]
+	},
+	"mixins": [
+		"goalsmith.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

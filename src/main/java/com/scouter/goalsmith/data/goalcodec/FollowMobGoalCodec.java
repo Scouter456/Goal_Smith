@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -11,7 +10,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 public class FollowMobGoalCodec implements GoalCodec {
 
-    public static final MapCodec<FollowMobGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<FollowMobGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(FollowMobGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(FollowMobGoalCodec::getSpeedModifier),
             Codec.FLOAT.fieldOf("stop_distance").forGetter(FollowMobGoalCodec::getStopDistance),
@@ -55,7 +54,7 @@ public class FollowMobGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.FOLLOW_MOB_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.FOLLOW_MOB_GOAL;
     }
 }

@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
@@ -15,7 +14,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 
 public class PanicGoalCodec implements GoalCodec {
 
-    public static final MapCodec<PanicGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<PanicGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(PanicGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(PanicGoalCodec::getSpeedModifier),
             NullableFieldCodec.makeDefaultableField("panic_predicate", PredicateCodec.DIRECT_CODEC, new OrPredicate<>(new OrPredicate<>(new NegatePredicate<>(new LastHurtByMobIsNullPredicate()), new IsFreezingPredicate()),new IsOnFirePredicate())).forGetter(PanicGoalCodec::getPredicateCodec)
@@ -28,10 +27,10 @@ public class PanicGoalCodec implements GoalCodec {
     private final double speedModifier;
     private final PredicateCodec<Entity> predicateCodec;
 
-
     public PanicGoalCodec(int goalPriority, double speedModifier) {
-        this(goalPriority, speedModifier, new OrPredicate<>(new OrPredicate<>(new NegatePredicate<>(new LastHurtByMobIsNullPredicate()), new IsFreezingPredicate()),new IsOnFirePredicate()));
+      this(goalPriority, speedModifier, new OrPredicate<>(new OrPredicate<>(new NegatePredicate<>(new LastHurtByMobIsNullPredicate()), new IsFreezingPredicate()),new IsOnFirePredicate()));
     }
+
 
     public PanicGoalCodec(int goalPriority, double speedModifier, PredicateCodec<Entity> panicPredicate) {
         this.goalPriority = goalPriority;
@@ -59,8 +58,8 @@ public class PanicGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.PANIC_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.PANIC_GOAL;
     }
 
     @Override

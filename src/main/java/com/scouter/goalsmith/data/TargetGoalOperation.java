@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.world.entity.PathfinderMob;
@@ -14,5 +13,5 @@ public interface TargetGoalOperation {
     Codec<Holder<TargetGoalOperation>> REFERENCE_CODEC = RegistryFileCodec.create(GSRegistries.Keys.TARGET_GOAL_OPERATION, DIRECT_CODEC);
 
     void performOperation(PathfinderMob mob);
-    MapCodec<? extends TargetGoalOperation> codec();
+    Codec<? extends TargetGoalOperation> codec();
 }

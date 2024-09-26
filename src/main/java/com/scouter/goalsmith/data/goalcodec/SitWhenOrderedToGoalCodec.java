@@ -2,7 +2,6 @@ package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -14,7 +13,7 @@ import org.slf4j.Logger;
 
 public class SitWhenOrderedToGoalCodec implements GoalCodec {
 
-    public static final MapCodec<SitWhenOrderedToGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<SitWhenOrderedToGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(SitWhenOrderedToGoalCodec::getGoalPriority)
     ).apply(instance, SitWhenOrderedToGoalCodec::new));
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -41,8 +40,8 @@ public class SitWhenOrderedToGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.SIT_WHEN_ORDERED_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.SIT_WHEN_ORDERED_GOAL;
     }
 
 }

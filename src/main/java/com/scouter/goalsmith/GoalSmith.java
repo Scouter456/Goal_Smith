@@ -1,59 +1,38 @@
 package com.scouter.goalsmith;
 
-import com.mojang.logging.LogUtils;
-import com.scouter.goalsmith.data.*;
-import com.scouter.goalsmith.setup.ModSetup;
+import com.scouter.goalsmith.data.EntityGoalJsonManager;
+import com.scouter.goalsmith.events.FabricEvents;
 import com.scouter.goalsmith.setup.Registration;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.minecraft.server.packs.PackType;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(GoalSmith.MODID)
-public class GoalSmith
-{
-    // Define mod id in a common place for everything to reference
-    public static final String MODID = "goalsmith";
-    // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+public class Goalsmith implements ModInitializer {
+	public static final String MODID = "goalsmith";
 
-    public GoalSmith()
-    {
-        Registration.init();
-        ModSetup.setup();
-        IEventBus forgeBus = NeoForge.EVENT_BUS;
-        IEventBus modbus = ModLoadingContext.get().getActiveContainer().getEventBus();
-        NeoForge.EVENT_BUS.addListener(this::commands);
-        modbus.addListener(ModSetup::init);
-        if (FMLEnvironment.dist == Dist.CLIENT)
-        {
-            // static method with no client-only classes in method signature
-        }
-        modbus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
-            event.dataPackRegistry(GSRegistries.Keys.GOAL_TYPE, GoalCodec.DIRECT_CODEC);
-            event.dataPackRegistry(GSRegistries.Keys.TARGET_GOAL_TYPE, TargetGoalCodec.DIRECT_CODEC);
-            event.dataPackRegistry(GSRegistries.Keys.GOAL_OPERATION, GoalOperation.DIRECT_CODEC);
-            event.dataPackRegistry(GSRegistries.Keys.PREDICATE_TYPE, PredicateCodec.DIRECT_CODEC);
-            event.dataPackRegistry(GSRegistries.Keys.TARGET_GOAL_OPERATION, TargetGoalOperation.DIRECT_CODEC);
-            event.dataPackRegistry(GSRegistries.Keys.ENTITY_TARGET_TYPE, EntityTargetType.DIRECT_CODEC);
+	// This logger is used to write text to the console and the log file.
+	// It is considered best practice to use your mod id as the logger's name.
+	// That way, it's clear which mod wrote info, warnings, and MODID.
+	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    });
-    }
+	@Override
+	public void onInitialize() {
+		// This code runs as soon as Minecraft is in a mod-load-ready state.
+		// However, some things (like resources) may still be uninitialized.
+		// Proceed with mild caution.
+		Registration.init();
+		ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new EntityGoalJsonManager());
 
-    public static ResourceLocation prefix(String name) {
-        return  ResourceLocation.fromNamespaceAndPath(MODID, name.toLowerCase(Locale.ROOT));
-    }
+		FabricEvents.onServerStart();
+		FabricEvents.onEntityLoad();
+	}
 
-    public void commands(RegisterCommandsEvent e) {
-        //    PuppetCommand.register(e.getDispatcher());
-    }
+	public static ResourceLocation prefix(String name) {
+		return new ResourceLocation(MODID, name.toLowerCase(Locale.ROOT));
+	}
 }

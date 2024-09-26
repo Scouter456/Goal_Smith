@@ -1,6 +1,5 @@
 package com.scouter.goalsmith.mixin;
 
-import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -13,12 +12,11 @@ import java.util.Set;
 @Mixin(AttributeMap.class)
 public interface AttributeAccessor {
     @Accessor("attributes")
-    Map<Holder<Attribute>, AttributeInstance> goalsmith$getAttributes();
+    Map<Attribute, AttributeInstance> goalsmith$getAttributes();
 
-    @Accessor("attributesToUpdate")
-    Set<AttributeInstance> goalsmith$getAttributesToUpdate();
+    @Accessor("dirtyAttributes")
+    Set<AttributeInstance> goalsmith$getDirtyAttributes();
 
-    @Accessor("attributesToSync")
-    Set<AttributeInstance> goalsmith$getAttributesToSync();
+
 
 }

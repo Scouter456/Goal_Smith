@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.server.level.ServerLevel;
@@ -14,5 +13,5 @@ public interface EntityTargetType {
     Codec<Holder<EntityTargetType>> REFERENCE_CODEC = RegistryFileCodec.create(GSRegistries.Keys.ENTITY_TARGET_TYPE, DIRECT_CODEC);
 
     void apply(ServerLevel level, GoalData data);
-    MapCodec<? extends EntityTargetType> codec();
+    Codec<? extends EntityTargetType> codec();
 }

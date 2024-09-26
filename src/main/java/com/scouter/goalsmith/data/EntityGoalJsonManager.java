@@ -3,6 +3,7 @@ package com.scouter.goalsmith.data;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -16,7 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EntityGoalJsonManager extends SimpleJsonResourceReloadListener {
+import static com.scouter.goalsmith.Goalsmith.prefix;
+
+public class EntityGoalJsonManager extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloadListener {
 
     private static final Gson STANDARD_GSON = new Gson();
     public static final Logger LOGGER = LogManager.getLogger();
@@ -53,24 +56,43 @@ public class EntityGoalJsonManager extends SimpleJsonResourceReloadListener {
         goalData.clear();
     }
 
+
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+       // Map<ResourceLocation, GoalData> goals = new HashMap<>();
+        //Map<String, GoalData> stringGoals = new HashMap<>()
+        // ;
         entityDataStringMap.clear();
         entityDataMap.clear();
         allEntityData.clear();
-
         List<GoalData> goalDatas = new ArrayList<>();
         for (Map.Entry<ResourceLocation, JsonElement> entry : jsons.entrySet()) {
             ResourceLocation key = entry.getKey();
             JsonElement element = entry.getValue();
+            GoalData.TARGET_ENTITY_CODEC.decode(JsonOps.INSTANCE, element)
+                    .get()
+                    .ifLeft(result -> {
+                        GoalData entityData = result.getFirst();
+                        goalDatas.add(entityData);
+                        //ResourceLocation location = entityData.getTargetEntity();
+                        //String string = entityData.getTargetEntityString();
+                        //if(location != null) {
+                        //    goals.put(location, entityData);
+                        //} else if(string != null) {
+                        //    stringGoals.put(string, entityData);
+                        //}
 
-            GoalData entityData = GoalData.TARGET_ENTITY_CODEC.decode(JsonOps.INSTANCE, element)
-                    .getOrThrow()
-                    .getFirst();
-            goalDatas.add(entityData);
+                    })
+                    .ifRight(partial -> LOGGER.error("Failed to parse goal data JSON for {} due to: {}", key, partial.message()));
         }
         this.goalData = goalDatas;
-
+        //this.entityDataMap = goals;
+        //this.entityDataStringMap = stringGoals;
         LOGGER.info("Data loader for {} loaded {} jsons", this.folderName, this.goalData.size());
+    }
+
+    @Override
+    public ResourceLocation getFabricId() {
+        return  prefix("goalsmith/goaldata");
     }
 }

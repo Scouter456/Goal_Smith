@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalCodec;
@@ -22,7 +21,7 @@ import java.util.function.Predicate;
 
 public class AvoidEntityGoalCodec implements GoalCodec {
 
-    public static final MapCodec<AvoidEntityGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<AvoidEntityGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(AvoidEntityGoalCodec::getGoalPriority),
             TagKey.codec(Registries.ENTITY_TYPE).fieldOf("entity_class_to_avoid").forGetter(AvoidEntityGoalCodec::getEntityClassToAvoid),
             NullableFieldCodec.makeDefaultableField("avoid_predicate", PredicateCodec.DIRECT_CODEC, new TruePredicate<>()).forGetter(AvoidEntityGoalCodec::getAvoidPredicate),
@@ -91,8 +90,8 @@ public class AvoidEntityGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.AVOID_ENTITY_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.AVOID_ENTITY_GOAL;
     }
 
     @Override

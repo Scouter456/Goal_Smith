@@ -2,7 +2,6 @@ package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -14,7 +13,7 @@ import org.slf4j.Logger;
 
 public class TradeWithPlayerGoalCodec implements GoalCodec {
     private static final Logger LOGGER = LogUtils.getLogger();
-    public static final MapCodec<TradeWithPlayerGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<TradeWithPlayerGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(TradeWithPlayerGoalCodec::getGoalPriority)
     ).apply(instance, TradeWithPlayerGoalCodec::new));
     private final int goalPriority;
@@ -39,8 +38,8 @@ public class TradeWithPlayerGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.TRADE_WITH_PLAYER_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.TRADE_WITH_PLAYER_GOAL;
     }
 
 

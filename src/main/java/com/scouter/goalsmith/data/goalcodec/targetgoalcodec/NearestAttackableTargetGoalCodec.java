@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.goalcodec.targetgoalcodec;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -16,12 +15,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 public class NearestAttackableTargetGoalCodec implements TargetGoalCodec {
-    public static final MapCodec<NearestAttackableTargetGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<NearestAttackableTargetGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("target_goal_priority").forGetter(codec -> codec.goalPriority),
             TagKey.codec(Registries.ENTITY_TYPE).fieldOf("target_type").forGetter(codec -> codec.targetType),
             NullableFieldCodec.makeDefaultableField("random_interval", Codec.INT, 10).forGetter(codec -> codec.randomInterval),
@@ -57,8 +56,8 @@ public class NearestAttackableTargetGoalCodec implements TargetGoalCodec {
     }
 
     @Override
-    public MapCodec<? extends TargetGoalCodec> codec() {
-        return GoalRegistry.NEAREST_ATTACKABLE_TARGET_GOAL.get();
+    public Codec<? extends TargetGoalCodec> codec() {
+        return GoalRegistry.NEAREST_ATTACKABLE_TARGET_GOAL;
     }
 
     @Override

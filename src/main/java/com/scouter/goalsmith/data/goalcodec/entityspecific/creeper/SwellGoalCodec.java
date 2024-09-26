@@ -2,7 +2,6 @@ package com.scouter.goalsmith.data.goalcodec.entityspecific.creeper;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -37,11 +36,11 @@ public class SwellGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.SWELL_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.SWELL_GOAL;
     }
 
-    public static final MapCodec<SwellGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<SwellGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(SwellGoalCodec::getGoalPriority)
     ).apply(instance, SwellGoalCodec::new));
 }

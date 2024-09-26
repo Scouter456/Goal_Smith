@@ -1,6 +1,6 @@
 package com.scouter.goalsmith.data.targets;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.EntityGoalJsonManager;
 import com.scouter.goalsmith.data.EntityTargetType;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SpecificEntityTargetType implements EntityTargetType {
 
-    public static final MapCodec<SpecificEntityTargetType> CODEC = RecordCodecBuilder.mapCodec(instance ->
+    public static final Codec<SpecificEntityTargetType> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     ResourceLocation.CODEC.fieldOf("target_entity").forGetter(SpecificEntityTargetType::getType)
             ).apply(instance, SpecificEntityTargetType::new)
@@ -37,7 +37,7 @@ public class SpecificEntityTargetType implements EntityTargetType {
     }
 
     @Override
-    public MapCodec<? extends EntityTargetType> codec() {
-        return EntityTargetTypeRegistry.SPECIFIC_TARGET.get();
+    public Codec<? extends EntityTargetType> codec() {
+        return EntityTargetTypeRegistry.SPECIFIC_TARGET;
     }
 }

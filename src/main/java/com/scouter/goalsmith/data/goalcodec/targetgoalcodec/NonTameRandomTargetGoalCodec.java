@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.goalcodec.targetgoalcodec;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -13,12 +12,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 public class NonTameRandomTargetGoalCodec implements TargetGoalCodec {
-    public static final MapCodec<NonTameRandomTargetGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<NonTameRandomTargetGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("target_goal_priority").forGetter(codec -> codec.goalPriority),
             TagKey.codec(Registries.ENTITY_TYPE).fieldOf("target_type").forGetter(codec -> codec.targetType),
             NullableFieldCodec.makeDefaultableField("random_interval", Codec.INT, 10).forGetter(codec -> codec.randomInterval),
@@ -56,8 +55,8 @@ public class NonTameRandomTargetGoalCodec implements TargetGoalCodec {
     }
 
     @Override
-    public MapCodec<? extends TargetGoalCodec> codec() {
-        return GoalRegistry.NON_TAME_RANDOM_TARGET_GOAL.get();
+    public Codec<? extends TargetGoalCodec> codec() {
+        return GoalRegistry.NON_TAME_RANDOM_TARGET_GOAL;
     }
 
     @Override

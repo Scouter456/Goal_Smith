@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -10,7 +9,7 @@ import net.minecraft.world.entity.ai.goal.BreathAirGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 public class BreathAirGoalCodec implements GoalCodec {
-    public static final MapCodec<BreathAirGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<BreathAirGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(BreathAirGoalCodec::getGoalPriority)
     ).apply(instance, BreathAirGoalCodec::new));
 
@@ -34,7 +33,7 @@ public class BreathAirGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.BREATH_AIR_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.BREATH_AIR_GOAL;
     }
 }

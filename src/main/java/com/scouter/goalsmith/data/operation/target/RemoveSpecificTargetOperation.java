@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.operation.target;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.codec.NullableFieldCodec;
 import com.scouter.goalsmith.data.GoalOperationRegistry;
@@ -12,14 +11,14 @@ import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 
 public record RemoveSpecificTargetOperation(ReplacementGoal toRemove) implements TargetGoalOperation {
 
-    private static final MapCodec<ReplacementGoal> REPLACEMENT_GOAL_CODEC = RecordCodecBuilder.mapCodec(instance ->
+    private static final Codec<ReplacementGoal> REPLACEMENT_GOAL_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     NullableFieldCodec.makeDefaultableField("target_goal_priority", Codec.INT, -1).forGetter(ReplacementGoal::priority),
                     TargetGoalMappings.CODEC.fieldOf("target_goal").forGetter(ReplacementGoal::goal)
             ).apply(instance, ReplacementGoal::new)
     );
 
-    public static final MapCodec<RemoveSpecificTargetOperation> CODEC = RecordCodecBuilder.mapCodec(instance ->
+    public static final Codec<RemoveSpecificTargetOperation> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     REPLACEMENT_GOAL_CODEC.fieldOf("target_goal_to_remove").forGetter(RemoveSpecificTargetOperation::toRemove)
             ).apply(instance, RemoveSpecificTargetOperation::new)
@@ -39,8 +38,8 @@ public record RemoveSpecificTargetOperation(ReplacementGoal toRemove) implements
     }
 
     @Override
-    public MapCodec<? extends TargetGoalOperation> codec() {
-        return GoalOperationRegistry.REMOVE_SPECIFIC_TARGET_GOAL.get();
+    public Codec<? extends TargetGoalOperation> codec() {
+        return GoalOperationRegistry.REMOVE_SPECIFIC_TARGET_GOAL;
     }
 
     public record ReplacementGoal(int priority, Class<? extends TargetGoal> goal){};

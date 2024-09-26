@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.goalcodec.entityspecific.abstracthorse;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -12,7 +11,7 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 
 public class RunAroundLikeCrazyGoalCodec implements GoalCodec {
 
-    public static final MapCodec<RunAroundLikeCrazyGoalCodec> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<RunAroundLikeCrazyGoalCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("goal_priority").forGetter(RunAroundLikeCrazyGoalCodec::getGoalPriority),
             Codec.DOUBLE.fieldOf("speed_modifier").forGetter(RunAroundLikeCrazyGoalCodec::getSpeedModifier)
     ).apply(instance, RunAroundLikeCrazyGoalCodec::new));
@@ -46,8 +45,8 @@ public class RunAroundLikeCrazyGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.RUN_AROUND_LIKE_CRAZY_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.RUN_AROUND_LIKE_CRAZY_GOAL;
     }
 
     @Override

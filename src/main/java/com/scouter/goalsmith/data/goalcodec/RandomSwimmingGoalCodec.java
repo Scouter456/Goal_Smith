@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data.goalcodec;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.GoalCodec;
 import com.scouter.goalsmith.data.GoalRegistry;
@@ -10,7 +9,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 
 public class RandomSwimmingGoalCodec implements GoalCodec {
-    public static final MapCodec<RandomSwimmingGoalCodec> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
+    public static final Codec<RandomSwimmingGoalCodec> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Codec.INT.fieldOf("goal_priority").forGetter(codec -> codec.goalPriority),
             Codec.DOUBLE.optionalFieldOf("speed_modifier", 1.0D).forGetter(codec -> codec.speedModifier),
             Codec.INT.optionalFieldOf("interval", 120).forGetter(codec -> codec.interval)
@@ -33,8 +32,8 @@ public class RandomSwimmingGoalCodec implements GoalCodec {
     }
 
     @Override
-    public MapCodec<? extends GoalCodec> codec() {
-        return GoalRegistry.RANDOM_SWIMMING_GOAL.get();
+    public Codec<? extends GoalCodec> codec() {
+        return GoalRegistry.RANDOM_SWIMMING_GOAL;
     }
 
     @Override

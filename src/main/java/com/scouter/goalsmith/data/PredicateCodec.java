@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
 
@@ -13,5 +12,5 @@ public interface PredicateCodec<T> {
 
     Codec<Holder<PredicateCodec<?>>> REFERENCE_CODEC = RegistryFileCodec.create(GSRegistries.Keys.PREDICATE_TYPE, DIRECT_CODEC);
     Predicate<T> getPredicate();
-    MapCodec<? extends PredicateCodec<T>> codec();
+    Codec<? extends PredicateCodec<T>> codec();
 }

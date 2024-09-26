@@ -1,6 +1,6 @@
 package com.scouter.goalsmith.data.predicates;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.scouter.goalsmith.data.PredicateCodec;
 import com.scouter.goalsmith.data.PredicateRegistry;
@@ -12,7 +12,7 @@ public class NegatePredicate<T> implements PredicateCodec<T> {
 
     private final PredicateCodec<? extends T> predicate;
 
-    public static final MapCodec<NegatePredicate<?>> CODEC = RecordCodecBuilder.mapCodec(instance ->
+    public static final Codec<NegatePredicate<?>> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     PredicateCodec.DIRECT_CODEC.fieldOf("predicate").forGetter(NegatePredicate::getPredicateC)
             ).apply(instance, NegatePredicate::new)
@@ -35,7 +35,7 @@ public class NegatePredicate<T> implements PredicateCodec<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public MapCodec<NegatePredicate<T>> codec() {
-        return (MapCodec<NegatePredicate<T>>) PredicateRegistry.NEGATE_PREDICATE.get();
+    public Codec<NegatePredicate<T>> codec() {
+        return (Codec<NegatePredicate<T>>) PredicateRegistry.NEGATE_PREDICATE;
     }
 }

@@ -1,7 +1,6 @@
 package com.scouter.goalsmith.data;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.world.entity.PathfinderMob;
@@ -15,5 +14,5 @@ public interface GoalCodec {
     Codec<Holder<GoalCodec>> REFERENCE_CODEC = RegistryFileCodec.create(GSRegistries.Keys.GOAL_TYPE, DIRECT_CODEC);
 
     Goal addGoal(PathfinderMob mob);
-    MapCodec<? extends GoalCodec> codec();
+    Codec<? extends GoalCodec> codec();
 }

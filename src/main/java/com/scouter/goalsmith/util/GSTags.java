@@ -1,6 +1,6 @@
 package com.scouter.goalsmith.util;
 
-import com.scouter.goalsmith.GoalSmith;
+import com.scouter.goalsmith.Goalsmith;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -18,11 +18,12 @@ public class GSTags {
     public static final TagKey<EntityType<?>> FISH = registerEntityTag("fish");
     public static final TagKey<EntityType<?>> ILLAGER = registerEntityTag("illager");
     public static final TagKey<EntityType<?>> PLAYER = registerEntityTag("player");
+    public static final TagKey<EntityType<?>> NONE = registerEntityTag("none");
 
 
     private static TagKey<EntityType<?>> registerEntityTag(String name) {
 
-        return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(GoalSmith.MODID, name));
+        return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Goalsmith.MODID, name));
     }
 }
 

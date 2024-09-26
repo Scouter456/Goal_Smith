@@ -5,7 +5,6 @@
     "minecraft:arrow",
     "minecraft:block_display",
     "minecraft:boat",
-    "minecraft:breeze_wind_charge",
     "minecraft:chest_boat",
     "minecraft:chest_minecart",
     "minecraft:command_block_minecart",
@@ -27,7 +26,6 @@
     "minecraft:item",
     "minecraft:item_display",
     "minecraft:item_frame",
-    "minecraft:ominous_item_spawner",
     "minecraft:fireball",
     "minecraft:leash_knot",
     "minecraft:lightning_bolt",
@@ -47,7 +45,6 @@
     "minecraft:tnt_minecart",
     "minecraft:trident",
     "minecraft:villager",
-    "minecraft:wind_charge",
     "minecraft:wither_skull",
     "minecraft:player",
     "minecraft:fishing_bobber"
